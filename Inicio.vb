@@ -2,7 +2,7 @@
 
 Public Class Inicio
 
-    Private Sub Inicio_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub Inicio_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         BaseDeDatos.Conectar()
 
@@ -40,11 +40,9 @@ Public Class Inicio
 
     End Sub
 
-    Private Sub Inicio_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    Private Sub Inicio_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
 
-        Conexion.Close()
-
-        MsgBox("D")
+        Application.Exit()
 
     End Sub
 

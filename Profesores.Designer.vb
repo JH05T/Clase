@@ -36,7 +36,7 @@ Partial Class Profesores
         MenuStripProfesores.Items.AddRange(New ToolStripItem() {ToolStripMenuItem1, AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem})
         MenuStripProfesores.Location = New Point(0, 0)
         MenuStripProfesores.Name = "MenuStripProfesores"
-        MenuStripProfesores.Size = New Size(800, 24)
+        MenuStripProfesores.Size = New Size(1234, 24)
         MenuStripProfesores.TabIndex = 2
         ' 
         ' ToolStripMenuItem1
@@ -72,7 +72,7 @@ Partial Class Profesores
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1234, 711)
         Controls.Add(MenuStripProfesores)
         Name = "Profesores"
         Text = "Profesores"

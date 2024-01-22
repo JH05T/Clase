@@ -10,7 +10,7 @@ Module BaseDeDatos
         Public Localidad As String
         Public Movil As String
         Public Email As String
-        Public FechaNacimiento As Date
+        Public FechaNacimiento As DateOnly
         Public Nacionalidad As String
     End Structure
 
@@ -63,15 +63,15 @@ Module BaseDeDatos
 
         Alumnos.ListViewAlumnos.View = View.Details
 
-        Alumnos.ListViewAlumnos.Columns.Add("Id", 25)
-        Alumnos.ListViewAlumnos.Columns.Add("Nombre", 100)
-        Alumnos.ListViewAlumnos.Columns.Add("Apellidos", 150)
-        Alumnos.ListViewAlumnos.Columns.Add("Dirección", 150)
-        Alumnos.ListViewAlumnos.Columns.Add("Localidad", 100)
-        Alumnos.ListViewAlumnos.Columns.Add("Móvil", 75)
-        Alumnos.ListViewAlumnos.Columns.Add("Email", 150)
-        Alumnos.ListViewAlumnos.Columns.Add("F. Nacimiento", 90)
-        Alumnos.ListViewAlumnos.Columns.Add("Nacionalidad", 100)
+        Alumnos.ListViewAlumnos.Columns.Add("Id", 25, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Nombre", 100, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Apellidos", 150, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Dirección", 150, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Localidad", 100, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Móvil", 75, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Email", 150, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("F. Nacimiento", 90, HorizontalAlignment.Center)
+        Alumnos.ListViewAlumnos.Columns.Add("Nacionalidad", 100, HorizontalAlignment.Center)
 
         For pos As Integer = 0 To DatosAlumnos.Tables(0).Rows.Count - 1
 

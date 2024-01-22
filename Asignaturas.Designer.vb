@@ -23,11 +23,11 @@ Partial Class Asignaturas
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         MenuStripAsignaturas = New MenuStrip()
+        ToolStripMenuItem1 = New ToolStripMenuItem()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
         VisualizarToolStripMenuItem = New ToolStripMenuItem()
-        ToolStripMenuItem1 = New ToolStripMenuItem()
         MenuStripAsignaturas.SuspendLayout()
         SuspendLayout()
         ' 
@@ -36,8 +36,13 @@ Partial Class Asignaturas
         MenuStripAsignaturas.Items.AddRange(New ToolStripItem() {ToolStripMenuItem1, AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem})
         MenuStripAsignaturas.Location = New Point(0, 0)
         MenuStripAsignaturas.Name = "MenuStripAsignaturas"
-        MenuStripAsignaturas.Size = New Size(800, 24)
+        MenuStripAsignaturas.Size = New Size(1234, 24)
         MenuStripAsignaturas.TabIndex = 2
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(12, 20)
         ' 
         ' AgregarToolStripMenuItem
         ' 
@@ -63,16 +68,11 @@ Partial Class Asignaturas
         VisualizarToolStripMenuItem.Size = New Size(68, 20)
         VisualizarToolStripMenuItem.Text = "Visualizar"
         ' 
-        ' ToolStripMenuItem1
-        ' 
-        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        ToolStripMenuItem1.Size = New Size(12, 20)
-        ' 
         ' Asignaturas
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1234, 711)
         Controls.Add(MenuStripAsignaturas)
         Name = "Asignaturas"
         Text = "Asignaturas"

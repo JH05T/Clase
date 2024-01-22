@@ -68,7 +68,7 @@ Partial Class Inicio
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1234, 711)
         Controls.Add(ButtonProfesores)
         Controls.Add(ButtonNotas)
         Controls.Add(ButtonAsignaturas)
