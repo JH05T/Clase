@@ -42,6 +42,8 @@ Public Class Inicio
 
     Private Sub Inicio_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
 
+        BaseDeDatos.Desconectar()
+
         Application.Exit()
 
     End Sub

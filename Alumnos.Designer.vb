@@ -28,7 +28,7 @@ Partial Class Alumnos
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
         VisualizarToolStripMenuItem = New ToolStripMenuItem()
-        ListViewAlumnos = New ListView()
+        ListView = New ListView()
         LabelId = New Label()
         LabelNombre = New Label()
         LabelApellidos = New Label()
@@ -89,13 +89,15 @@ Partial Class Alumnos
         VisualizarToolStripMenuItem.Size = New Size(68, 20)
         VisualizarToolStripMenuItem.Text = "Visualizar"
         ' 
-        ' ListViewAlumnos
+        ' ListView
         ' 
-        ListViewAlumnos.Location = New Point(117, 400)
-        ListViewAlumnos.Name = "ListViewAlumnos"
-        ListViewAlumnos.Size = New Size(1000, 256)
-        ListViewAlumnos.TabIndex = 2
-        ListViewAlumnos.UseCompatibleStateImageBehavior = False
+        ListView.FullRowSelect = True
+        ListView.GridLines = True
+        ListView.Location = New Point(117, 400)
+        ListView.Name = "ListView"
+        ListView.Size = New Size(1000, 256)
+        ListView.TabIndex = 2
+        ListView.UseCompatibleStateImageBehavior = False
         ' 
         ' LabelId
         ' 
@@ -272,7 +274,7 @@ Partial Class Alumnos
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1234, 711)
-        Controls.Add(ListViewAlumnos)
+        Controls.Add(ListView)
         Controls.Add(MenuStripAlumnos)
         Controls.Add(GroupBoxAlumnos)
         MainMenuStrip = MenuStripAlumnos
@@ -291,7 +293,7 @@ Partial Class Alumnos
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VisualizarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ListViewAlumnos As ListView
+    Friend WithEvents ListView As ListView
     Friend WithEvents LabelId As Label
     Friend WithEvents LabelNombre As Label
     Friend WithEvents LabelApellidos As Label
