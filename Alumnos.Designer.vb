@@ -47,9 +47,22 @@ Partial Class Alumnos
         TextBoxEmail = New TextBox()
         TextBoxFechaNacimiento = New TextBox()
         TextBoxNacionalidad = New TextBox()
-        GroupBoxAlumnos = New GroupBox()
+        GroupBoxRellenarDatos = New GroupBox()
+        ComboBoxMesFechaNacimiento = New ComboBox()
+        ComboBoxDiaFechaNacimiento = New ComboBox()
+        GroupBoxBotones = New GroupBox()
+        ButtonUltimo = New Button()
+        ButtonSiguiente = New Button()
+        ButtonAceptar = New Button()
+        ButtonCancelar = New Button()
+        ButtonAnterior = New Button()
+        ButtonPrimero = New Button()
+        LabelDia = New Label()
+        LabelMes = New Label()
+        LabelYear = New Label()
         MenuStripAlumnos.SuspendLayout()
-        GroupBoxAlumnos.SuspendLayout()
+        GroupBoxRellenarDatos.SuspendLayout()
+        GroupBoxBotones.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStripAlumnos
@@ -96,7 +109,7 @@ Partial Class Alumnos
         ListView.Location = New Point(117, 400)
         ListView.Name = "ListView"
         ListView.Size = New Size(1000, 256)
-        ListView.TabIndex = 2
+        ListView.TabIndex = 11
         ListView.UseCompatibleStateImageBehavior = False
         ' 
         ' LabelId
@@ -185,105 +198,223 @@ Partial Class Alumnos
         TextBoxId.Location = New Point(127, 50)
         TextBoxId.Name = "TextBoxId"
         TextBoxId.Size = New Size(150, 23)
-        TextBoxId.TabIndex = 12
+        TextBoxId.TabIndex = 0
         ' 
         ' TextBoxNombre
         ' 
         TextBoxNombre.Location = New Point(485, 50)
         TextBoxNombre.Name = "TextBoxNombre"
         TextBoxNombre.Size = New Size(150, 23)
-        TextBoxNombre.TabIndex = 13
+        TextBoxNombre.TabIndex = 1
         ' 
         ' TextBoxApellidos
         ' 
         TextBoxApellidos.Location = New Point(847, 50)
         TextBoxApellidos.Name = "TextBoxApellidos"
         TextBoxApellidos.Size = New Size(150, 23)
-        TextBoxApellidos.TabIndex = 14
+        TextBoxApellidos.TabIndex = 2
         ' 
         ' TextBoxDireccion
         ' 
         TextBoxDireccion.Location = New Point(127, 150)
         TextBoxDireccion.Name = "TextBoxDireccion"
         TextBoxDireccion.Size = New Size(150, 23)
-        TextBoxDireccion.TabIndex = 15
+        TextBoxDireccion.TabIndex = 3
         ' 
         ' TextBoxLocalidad
         ' 
         TextBoxLocalidad.Location = New Point(485, 150)
         TextBoxLocalidad.Name = "TextBoxLocalidad"
         TextBoxLocalidad.Size = New Size(150, 23)
-        TextBoxLocalidad.TabIndex = 16
+        TextBoxLocalidad.TabIndex = 4
         ' 
         ' TextBoxMovil
         ' 
         TextBoxMovil.Location = New Point(847, 150)
         TextBoxMovil.Name = "TextBoxMovil"
         TextBoxMovil.Size = New Size(150, 23)
-        TextBoxMovil.TabIndex = 17
+        TextBoxMovil.TabIndex = 5
         ' 
         ' TextBoxEmail
         ' 
         TextBoxEmail.Location = New Point(127, 250)
         TextBoxEmail.Name = "TextBoxEmail"
         TextBoxEmail.Size = New Size(150, 23)
-        TextBoxEmail.TabIndex = 18
+        TextBoxEmail.TabIndex = 6
         ' 
         ' TextBoxFechaNacimiento
         ' 
-        TextBoxFechaNacimiento.Location = New Point(485, 250)
+        TextBoxFechaNacimiento.Location = New Point(585, 250)
         TextBoxFechaNacimiento.Name = "TextBoxFechaNacimiento"
-        TextBoxFechaNacimiento.Size = New Size(150, 23)
-        TextBoxFechaNacimiento.TabIndex = 19
+        TextBoxFechaNacimiento.Size = New Size(50, 23)
+        TextBoxFechaNacimiento.TabIndex = 9
         ' 
         ' TextBoxNacionalidad
         ' 
         TextBoxNacionalidad.Location = New Point(845, 250)
         TextBoxNacionalidad.Name = "TextBoxNacionalidad"
         TextBoxNacionalidad.Size = New Size(150, 23)
-        TextBoxNacionalidad.TabIndex = 20
+        TextBoxNacionalidad.TabIndex = 10
         ' 
-        ' GroupBoxAlumnos
+        ' GroupBoxRellenarDatos
         ' 
-        GroupBoxAlumnos.Controls.Add(TextBoxNacionalidad)
-        GroupBoxAlumnos.Controls.Add(LabelId)
-        GroupBoxAlumnos.Controls.Add(TextBoxFechaNacimiento)
-        GroupBoxAlumnos.Controls.Add(LabelNombre)
-        GroupBoxAlumnos.Controls.Add(TextBoxEmail)
-        GroupBoxAlumnos.Controls.Add(LabelApellidos)
-        GroupBoxAlumnos.Controls.Add(TextBoxMovil)
-        GroupBoxAlumnos.Controls.Add(LabelDireccion)
-        GroupBoxAlumnos.Controls.Add(TextBoxLocalidad)
-        GroupBoxAlumnos.Controls.Add(LabelLocalidad)
-        GroupBoxAlumnos.Controls.Add(TextBoxDireccion)
-        GroupBoxAlumnos.Controls.Add(LabelMovil)
-        GroupBoxAlumnos.Controls.Add(TextBoxApellidos)
-        GroupBoxAlumnos.Controls.Add(LabelEmail)
-        GroupBoxAlumnos.Controls.Add(TextBoxNombre)
-        GroupBoxAlumnos.Controls.Add(LabelFechaNacimiento)
-        GroupBoxAlumnos.Controls.Add(TextBoxId)
-        GroupBoxAlumnos.Controls.Add(LabelNacionalidad)
-        GroupBoxAlumnos.Location = New Point(117, 50)
-        GroupBoxAlumnos.Name = "GroupBoxAlumnos"
-        GroupBoxAlumnos.Size = New Size(1000, 300)
-        GroupBoxAlumnos.TabIndex = 21
-        GroupBoxAlumnos.TabStop = False
+        GroupBoxRellenarDatos.Controls.Add(LabelYear)
+        GroupBoxRellenarDatos.Controls.Add(LabelMes)
+        GroupBoxRellenarDatos.Controls.Add(LabelDia)
+        GroupBoxRellenarDatos.Controls.Add(ComboBoxMesFechaNacimiento)
+        GroupBoxRellenarDatos.Controls.Add(ComboBoxDiaFechaNacimiento)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxNacionalidad)
+        GroupBoxRellenarDatos.Controls.Add(LabelId)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxFechaNacimiento)
+        GroupBoxRellenarDatos.Controls.Add(LabelNombre)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxEmail)
+        GroupBoxRellenarDatos.Controls.Add(LabelApellidos)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxMovil)
+        GroupBoxRellenarDatos.Controls.Add(LabelDireccion)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxLocalidad)
+        GroupBoxRellenarDatos.Controls.Add(LabelLocalidad)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxDireccion)
+        GroupBoxRellenarDatos.Controls.Add(LabelMovil)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxApellidos)
+        GroupBoxRellenarDatos.Controls.Add(LabelEmail)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxNombre)
+        GroupBoxRellenarDatos.Controls.Add(LabelFechaNacimiento)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxId)
+        GroupBoxRellenarDatos.Controls.Add(LabelNacionalidad)
+        GroupBoxRellenarDatos.Location = New Point(117, 50)
+        GroupBoxRellenarDatos.Name = "GroupBoxRellenarDatos"
+        GroupBoxRellenarDatos.Size = New Size(1000, 300)
+        GroupBoxRellenarDatos.TabIndex = 0
+        GroupBoxRellenarDatos.TabStop = False
+        ' 
+        ' ComboBoxMesFechaNacimiento
+        ' 
+        ComboBoxMesFechaNacimiento.FormattingEnabled = True
+        ComboBoxMesFechaNacimiento.Location = New Point(535, 250)
+        ComboBoxMesFechaNacimiento.Name = "ComboBoxMesFechaNacimiento"
+        ComboBoxMesFechaNacimiento.Size = New Size(50, 23)
+        ComboBoxMesFechaNacimiento.TabIndex = 8
+        ' 
+        ' ComboBoxDiaFechaNacimiento
+        ' 
+        ComboBoxDiaFechaNacimiento.FormattingEnabled = True
+        ComboBoxDiaFechaNacimiento.Location = New Point(485, 250)
+        ComboBoxDiaFechaNacimiento.Name = "ComboBoxDiaFechaNacimiento"
+        ComboBoxDiaFechaNacimiento.Size = New Size(50, 23)
+        ComboBoxDiaFechaNacimiento.TabIndex = 7
+        ' 
+        ' GroupBoxBotones
+        ' 
+        GroupBoxBotones.Controls.Add(ButtonUltimo)
+        GroupBoxBotones.Controls.Add(ButtonSiguiente)
+        GroupBoxBotones.Controls.Add(ButtonAceptar)
+        GroupBoxBotones.Controls.Add(ButtonCancelar)
+        GroupBoxBotones.Controls.Add(ButtonAnterior)
+        GroupBoxBotones.Controls.Add(ButtonPrimero)
+        GroupBoxBotones.Location = New Point(117, 349)
+        GroupBoxBotones.Name = "GroupBoxBotones"
+        GroupBoxBotones.Size = New Size(1000, 44)
+        GroupBoxBotones.TabIndex = 0
+        GroupBoxBotones.TabStop = False
+        ' 
+        ' ButtonUltimo
+        ' 
+        ButtonUltimo.Location = New Point(925, 8)
+        ButtonUltimo.Name = "ButtonUltimo"
+        ButtonUltimo.Size = New Size(75, 35)
+        ButtonUltimo.TabIndex = 5
+        ButtonUltimo.Text = "Último"
+        ButtonUltimo.UseVisualStyleBackColor = True
+        ' 
+        ' ButtonSiguiente
+        ' 
+        ButtonSiguiente.Location = New Point(800, 8)
+        ButtonSiguiente.Name = "ButtonSiguiente"
+        ButtonSiguiente.Size = New Size(75, 35)
+        ButtonSiguiente.TabIndex = 4
+        ButtonSiguiente.Text = "Siguiente"
+        ButtonSiguiente.UseVisualStyleBackColor = True
+        ' 
+        ' ButtonAceptar
+        ' 
+        ButtonAceptar.Location = New Point(575, 8)
+        ButtonAceptar.Name = "ButtonAceptar"
+        ButtonAceptar.Size = New Size(75, 35)
+        ButtonAceptar.TabIndex = 3
+        ButtonAceptar.Text = "Aceptar"
+        ButtonAceptar.UseVisualStyleBackColor = True
+        ' 
+        ' ButtonCancelar
+        ' 
+        ButtonCancelar.Location = New Point(350, 8)
+        ButtonCancelar.Name = "ButtonCancelar"
+        ButtonCancelar.Size = New Size(75, 35)
+        ButtonCancelar.TabIndex = 2
+        ButtonCancelar.Text = "Cancelar"
+        ButtonCancelar.UseVisualStyleBackColor = True
+        ' 
+        ' ButtonAnterior
+        ' 
+        ButtonAnterior.Location = New Point(125, 8)
+        ButtonAnterior.Name = "ButtonAnterior"
+        ButtonAnterior.Size = New Size(75, 35)
+        ButtonAnterior.TabIndex = 1
+        ButtonAnterior.Text = "Anterior"
+        ButtonAnterior.UseVisualStyleBackColor = True
+        ' 
+        ' ButtonPrimero
+        ' 
+        ButtonPrimero.Location = New Point(0, 8)
+        ButtonPrimero.Name = "ButtonPrimero"
+        ButtonPrimero.Size = New Size(75, 35)
+        ButtonPrimero.TabIndex = 0
+        ButtonPrimero.Text = "Primero"
+        ButtonPrimero.UseVisualStyleBackColor = True
+        ' 
+        ' LabelDia
+        ' 
+        LabelDia.Location = New Point(485, 224)
+        LabelDia.Name = "LabelDia"
+        LabelDia.Size = New Size(50, 23)
+        LabelDia.TabIndex = 12
+        LabelDia.Text = "Día"
+        LabelDia.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' LabelMes
+        ' 
+        LabelMes.Location = New Point(535, 224)
+        LabelMes.Name = "LabelMes"
+        LabelMes.Size = New Size(50, 23)
+        LabelMes.TabIndex = 13
+        LabelMes.Text = "Mes"
+        LabelMes.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' LabelYear
+        ' 
+        LabelYear.Location = New Point(585, 224)
+        LabelYear.Name = "LabelYear"
+        LabelYear.Size = New Size(50, 23)
+        LabelYear.TabIndex = 14
+        LabelYear.Text = "Año"
+        LabelYear.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' Alumnos
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1234, 711)
+        Controls.Add(GroupBoxBotones)
         Controls.Add(ListView)
         Controls.Add(MenuStripAlumnos)
-        Controls.Add(GroupBoxAlumnos)
+        Controls.Add(GroupBoxRellenarDatos)
         MainMenuStrip = MenuStripAlumnos
         Name = "Alumnos"
         Text = "Alumnos"
         MenuStripAlumnos.ResumeLayout(False)
         MenuStripAlumnos.PerformLayout()
-        GroupBoxAlumnos.ResumeLayout(False)
-        GroupBoxAlumnos.PerformLayout()
+        GroupBoxRellenarDatos.ResumeLayout(False)
+        GroupBoxRellenarDatos.PerformLayout()
+        GroupBoxBotones.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -312,5 +443,17 @@ Partial Class Alumnos
     Friend WithEvents TextBoxEmail As TextBox
     Friend WithEvents TextBoxFechaNacimiento As TextBox
     Friend WithEvents TextBoxNacionalidad As TextBox
-    Friend WithEvents GroupBoxAlumnos As GroupBox
+    Friend WithEvents GroupBoxRellenarDatos As GroupBox
+    Friend WithEvents GroupBoxBotones As GroupBox
+    Friend WithEvents ComboBoxMesFechaNacimiento As ComboBox
+    Friend WithEvents ComboBoxDiaFechaNacimiento As ComboBox
+    Friend WithEvents ButtonUltimo As Button
+    Friend WithEvents ButtonSiguiente As Button
+    Friend WithEvents ButtonAceptar As Button
+    Friend WithEvents ButtonCancelar As Button
+    Friend WithEvents ButtonAnterior As Button
+    Friend WithEvents ButtonPrimero As Button
+    Friend WithEvents LabelYear As Label
+    Friend WithEvents LabelMes As Label
+    Friend WithEvents LabelDia As Label
 End Class
