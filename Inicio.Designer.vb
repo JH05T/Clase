@@ -22,6 +22,7 @@ Partial Class Inicio
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Inicio))
         ButtonAlumnos = New Button()
         ButtonAsignaturas = New Button()
         ButtonNotas = New Button()
@@ -30,6 +31,7 @@ Partial Class Inicio
         ' 
         ' ButtonAlumnos
         ' 
+        ButtonAlumnos.FlatStyle = FlatStyle.System
         ButtonAlumnos.Location = New Point(303, 61)
         ButtonAlumnos.Name = "ButtonAlumnos"
         ButtonAlumnos.Size = New Size(75, 23)
@@ -68,12 +70,15 @@ Partial Class Inicio
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1234, 711)
         Controls.Add(ButtonProfesores)
         Controls.Add(ButtonNotas)
         Controls.Add(ButtonAsignaturas)
         Controls.Add(ButtonAlumnos)
         Name = "Inicio"
+        StartPosition = FormStartPosition.CenterScreen
         ResumeLayout(False)
     End Sub
 

@@ -22,11 +22,13 @@ Partial Class Alumnos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Alumnos))
         MenuStripAlumnos = New MenuStrip()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
         VisualizarToolStripMenuItem = New ToolStripMenuItem()
+        VolverToolStripMenuItem = New ToolStripMenuItem()
         ListView = New ListView()
         LabelId = New Label()
         LabelNombre = New Label()
@@ -47,11 +49,11 @@ Partial Class Alumnos
         TextBoxFechaNacimiento = New TextBox()
         TextBoxNacionalidad = New TextBox()
         GroupBoxRellenarDatos = New GroupBox()
+        TextBoxDiaFechaNacimiento = New TextBox()
+        TextBoxMesFechaNacimiento = New TextBox()
         LabelYear = New Label()
         LabelMes = New Label()
         LabelDia = New Label()
-        ComboBoxMesFechaNacimiento = New ComboBox()
-        ComboBoxDiaFechaNacimiento = New ComboBox()
         GroupBoxBuscar = New GroupBox()
         LabelBuscar = New Label()
         TextBoxBuscar = New TextBox()
@@ -70,7 +72,7 @@ Partial Class Alumnos
         ' MenuStripAlumnos
         ' 
         MenuStripAlumnos.BackColor = Color.White
-        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem})
+        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
         MenuStripAlumnos.Location = New Point(0, 0)
         MenuStripAlumnos.Name = "MenuStripAlumnos"
         MenuStripAlumnos.Size = New Size(1234, 24)
@@ -100,8 +102,15 @@ Partial Class Alumnos
         VisualizarToolStripMenuItem.Size = New Size(68, 20)
         VisualizarToolStripMenuItem.Text = "Visualizar"
         ' 
+        ' VolverToolStripMenuItem
+        ' 
+        VolverToolStripMenuItem.Name = "VolverToolStripMenuItem"
+        VolverToolStripMenuItem.Size = New Size(51, 20)
+        VolverToolStripMenuItem.Text = "Volver"
+        ' 
         ' ListView
         ' 
+        ListView.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         ListView.FullRowSelect = True
         ListView.GridLines = True
         ListView.Location = New Point(117, 400)
@@ -112,6 +121,7 @@ Partial Class Alumnos
         ' 
         ' LabelId
         ' 
+        LabelId.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelId.Location = New Point(1, 50)
         LabelId.Name = "LabelId"
         LabelId.Size = New Size(120, 23)
@@ -121,6 +131,7 @@ Partial Class Alumnos
         ' 
         ' LabelNombre
         ' 
+        LabelNombre.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelNombre.Location = New Point(359, 50)
         LabelNombre.Name = "LabelNombre"
         LabelNombre.Size = New Size(120, 23)
@@ -130,6 +141,7 @@ Partial Class Alumnos
         ' 
         ' LabelApellidos
         ' 
+        LabelApellidos.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelApellidos.Location = New Point(721, 50)
         LabelApellidos.Name = "LabelApellidos"
         LabelApellidos.Size = New Size(120, 23)
@@ -139,6 +151,7 @@ Partial Class Alumnos
         ' 
         ' LabelDireccion
         ' 
+        LabelDireccion.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelDireccion.Location = New Point(1, 150)
         LabelDireccion.Name = "LabelDireccion"
         LabelDireccion.Size = New Size(120, 23)
@@ -148,6 +161,7 @@ Partial Class Alumnos
         ' 
         ' LabelLocalidad
         ' 
+        LabelLocalidad.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelLocalidad.Location = New Point(359, 150)
         LabelLocalidad.Name = "LabelLocalidad"
         LabelLocalidad.Size = New Size(120, 23)
@@ -157,6 +171,7 @@ Partial Class Alumnos
         ' 
         ' LabelMovil
         ' 
+        LabelMovil.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelMovil.Location = New Point(721, 150)
         LabelMovil.Name = "LabelMovil"
         LabelMovil.Size = New Size(120, 23)
@@ -166,6 +181,7 @@ Partial Class Alumnos
         ' 
         ' LabelEmail
         ' 
+        LabelEmail.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelEmail.Location = New Point(1, 250)
         LabelEmail.Name = "LabelEmail"
         LabelEmail.Size = New Size(120, 23)
@@ -175,6 +191,7 @@ Partial Class Alumnos
         ' 
         ' LabelFechaNacimiento
         ' 
+        LabelFechaNacimiento.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelFechaNacimiento.Location = New Point(359, 250)
         LabelFechaNacimiento.Name = "LabelFechaNacimiento"
         LabelFechaNacimiento.Size = New Size(120, 23)
@@ -184,6 +201,7 @@ Partial Class Alumnos
         ' 
         ' LabelNacionalidad
         ' 
+        LabelNacionalidad.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelNacionalidad.Location = New Point(719, 250)
         LabelNacionalidad.Name = "LabelNacionalidad"
         LabelNacionalidad.Size = New Size(120, 23)
@@ -193,75 +211,85 @@ Partial Class Alumnos
         ' 
         ' TextBoxId
         ' 
+        TextBoxId.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxId.Location = New Point(127, 50)
         TextBoxId.Name = "TextBoxId"
         TextBoxId.ReadOnly = True
-        TextBoxId.Size = New Size(150, 23)
+        TextBoxId.Size = New Size(150, 29)
         TextBoxId.TabIndex = 0
         ' 
         ' TextBoxNombre
         ' 
+        TextBoxNombre.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxNombre.Location = New Point(485, 50)
         TextBoxNombre.Name = "TextBoxNombre"
-        TextBoxNombre.Size = New Size(150, 23)
+        TextBoxNombre.Size = New Size(150, 29)
         TextBoxNombre.TabIndex = 1
         ' 
         ' TextBoxApellidos
         ' 
+        TextBoxApellidos.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxApellidos.Location = New Point(847, 50)
         TextBoxApellidos.Name = "TextBoxApellidos"
-        TextBoxApellidos.Size = New Size(150, 23)
+        TextBoxApellidos.Size = New Size(150, 29)
         TextBoxApellidos.TabIndex = 2
         ' 
         ' TextBoxDireccion
         ' 
+        TextBoxDireccion.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxDireccion.Location = New Point(127, 150)
         TextBoxDireccion.Name = "TextBoxDireccion"
-        TextBoxDireccion.Size = New Size(150, 23)
+        TextBoxDireccion.Size = New Size(150, 29)
         TextBoxDireccion.TabIndex = 3
         ' 
         ' TextBoxLocalidad
         ' 
+        TextBoxLocalidad.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxLocalidad.Location = New Point(485, 150)
         TextBoxLocalidad.Name = "TextBoxLocalidad"
-        TextBoxLocalidad.Size = New Size(150, 23)
+        TextBoxLocalidad.Size = New Size(150, 29)
         TextBoxLocalidad.TabIndex = 4
         ' 
         ' TextBoxMovil
         ' 
+        TextBoxMovil.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxMovil.Location = New Point(847, 150)
         TextBoxMovil.Name = "TextBoxMovil"
-        TextBoxMovil.Size = New Size(150, 23)
+        TextBoxMovil.Size = New Size(150, 29)
         TextBoxMovil.TabIndex = 5
         ' 
         ' TextBoxEmail
         ' 
+        TextBoxEmail.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxEmail.Location = New Point(127, 250)
         TextBoxEmail.Name = "TextBoxEmail"
-        TextBoxEmail.Size = New Size(150, 23)
+        TextBoxEmail.Size = New Size(150, 29)
         TextBoxEmail.TabIndex = 6
         ' 
         ' TextBoxFechaNacimiento
         ' 
+        TextBoxFechaNacimiento.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxFechaNacimiento.Location = New Point(585, 250)
         TextBoxFechaNacimiento.Name = "TextBoxFechaNacimiento"
-        TextBoxFechaNacimiento.Size = New Size(50, 23)
+        TextBoxFechaNacimiento.Size = New Size(50, 29)
         TextBoxFechaNacimiento.TabIndex = 9
         ' 
         ' TextBoxNacionalidad
         ' 
+        TextBoxNacionalidad.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxNacionalidad.Location = New Point(845, 250)
         TextBoxNacionalidad.Name = "TextBoxNacionalidad"
-        TextBoxNacionalidad.Size = New Size(150, 23)
+        TextBoxNacionalidad.Size = New Size(150, 29)
         TextBoxNacionalidad.TabIndex = 10
         ' 
         ' GroupBoxRellenarDatos
         ' 
+        GroupBoxRellenarDatos.BackColor = Color.Transparent
+        GroupBoxRellenarDatos.Controls.Add(TextBoxDiaFechaNacimiento)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxMesFechaNacimiento)
         GroupBoxRellenarDatos.Controls.Add(LabelYear)
         GroupBoxRellenarDatos.Controls.Add(LabelMes)
         GroupBoxRellenarDatos.Controls.Add(LabelDia)
-        GroupBoxRellenarDatos.Controls.Add(ComboBoxMesFechaNacimiento)
-        GroupBoxRellenarDatos.Controls.Add(ComboBoxDiaFechaNacimiento)
         GroupBoxRellenarDatos.Controls.Add(TextBoxNacionalidad)
         GroupBoxRellenarDatos.Controls.Add(LabelId)
         GroupBoxRellenarDatos.Controls.Add(TextBoxFechaNacimiento)
@@ -286,8 +314,25 @@ Partial Class Alumnos
         GroupBoxRellenarDatos.TabIndex = 0
         GroupBoxRellenarDatos.TabStop = False
         ' 
+        ' TextBoxDiaFechaNacimiento
+        ' 
+        TextBoxDiaFechaNacimiento.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBoxDiaFechaNacimiento.Location = New Point(485, 250)
+        TextBoxDiaFechaNacimiento.Name = "TextBoxDiaFechaNacimiento"
+        TextBoxDiaFechaNacimiento.Size = New Size(50, 29)
+        TextBoxDiaFechaNacimiento.TabIndex = 7
+        ' 
+        ' TextBoxMesFechaNacimiento
+        ' 
+        TextBoxMesFechaNacimiento.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBoxMesFechaNacimiento.Location = New Point(535, 250)
+        TextBoxMesFechaNacimiento.Name = "TextBoxMesFechaNacimiento"
+        TextBoxMesFechaNacimiento.Size = New Size(50, 29)
+        TextBoxMesFechaNacimiento.TabIndex = 8
+        ' 
         ' LabelYear
         ' 
+        LabelYear.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelYear.Location = New Point(585, 224)
         LabelYear.Name = "LabelYear"
         LabelYear.Size = New Size(50, 23)
@@ -297,6 +342,7 @@ Partial Class Alumnos
         ' 
         ' LabelMes
         ' 
+        LabelMes.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelMes.Location = New Point(535, 224)
         LabelMes.Name = "LabelMes"
         LabelMes.Size = New Size(50, 23)
@@ -306,6 +352,7 @@ Partial Class Alumnos
         ' 
         ' LabelDia
         ' 
+        LabelDia.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelDia.Location = New Point(485, 224)
         LabelDia.Name = "LabelDia"
         LabelDia.Size = New Size(50, 23)
@@ -313,24 +360,9 @@ Partial Class Alumnos
         LabelDia.Text = "Día"
         LabelDia.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' ComboBoxMesFechaNacimiento
-        ' 
-        ComboBoxMesFechaNacimiento.FormattingEnabled = True
-        ComboBoxMesFechaNacimiento.Location = New Point(535, 250)
-        ComboBoxMesFechaNacimiento.Name = "ComboBoxMesFechaNacimiento"
-        ComboBoxMesFechaNacimiento.Size = New Size(50, 23)
-        ComboBoxMesFechaNacimiento.TabIndex = 8
-        ' 
-        ' ComboBoxDiaFechaNacimiento
-        ' 
-        ComboBoxDiaFechaNacimiento.FormattingEnabled = True
-        ComboBoxDiaFechaNacimiento.Location = New Point(485, 250)
-        ComboBoxDiaFechaNacimiento.Name = "ComboBoxDiaFechaNacimiento"
-        ComboBoxDiaFechaNacimiento.Size = New Size(50, 23)
-        ComboBoxDiaFechaNacimiento.TabIndex = 7
-        ' 
         ' GroupBoxBuscar
         ' 
+        GroupBoxBuscar.BackColor = Color.Transparent
         GroupBoxBuscar.Controls.Add(LabelBuscar)
         GroupBoxBuscar.Controls.Add(TextBoxBuscar)
         GroupBoxBuscar.Controls.Add(ButtonBuscar)
@@ -338,6 +370,7 @@ Partial Class Alumnos
         GroupBoxBuscar.Controls.Add(ButtonSiguiente)
         GroupBoxBuscar.Controls.Add(ButtonAnterior)
         GroupBoxBuscar.Controls.Add(ButtonPrimero)
+        GroupBoxBuscar.ForeColor = Color.Black
         GroupBoxBuscar.Location = New Point(117, 349)
         GroupBoxBuscar.Name = "GroupBoxBuscar"
         GroupBoxBuscar.Size = New Size(1000, 44)
@@ -346,6 +379,7 @@ Partial Class Alumnos
         ' 
         ' LabelBuscar
         ' 
+        LabelBuscar.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
         LabelBuscar.Location = New Point(245, 15)
         LabelBuscar.Name = "LabelBuscar"
         LabelBuscar.Size = New Size(300, 23)
@@ -355,22 +389,26 @@ Partial Class Alumnos
         ' 
         ' TextBoxBuscar
         ' 
-        TextBoxBuscar.Location = New Point(550, 15)
+        TextBoxBuscar.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBoxBuscar.Location = New Point(550, 11)
         TextBoxBuscar.Name = "TextBoxBuscar"
-        TextBoxBuscar.Size = New Size(150, 23)
+        TextBoxBuscar.Size = New Size(150, 29)
         TextBoxBuscar.TabIndex = 2
         ' 
         ' ButtonBuscar
         ' 
+        ButtonBuscar.BackgroundImage = CType(resources.GetObject("ButtonBuscar.BackgroundImage"), Image)
+        ButtonBuscar.BackgroundImageLayout = ImageLayout.Zoom
         ButtonBuscar.Location = New Point(705, 8)
         ButtonBuscar.Name = "ButtonBuscar"
         ButtonBuscar.Size = New Size(35, 35)
         ButtonBuscar.TabIndex = 3
-        ButtonBuscar.Text = "ButtonBuscar"
         ButtonBuscar.UseVisualStyleBackColor = True
         ' 
         ' ButtonUltimo
         ' 
+        ButtonUltimo.FlatStyle = FlatStyle.System
+        ButtonUltimo.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonUltimo.Location = New Point(925, 8)
         ButtonUltimo.Name = "ButtonUltimo"
         ButtonUltimo.Size = New Size(75, 35)
@@ -380,6 +418,7 @@ Partial Class Alumnos
         ' 
         ' ButtonSiguiente
         ' 
+        ButtonSiguiente.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonSiguiente.Location = New Point(800, 8)
         ButtonSiguiente.Name = "ButtonSiguiente"
         ButtonSiguiente.Size = New Size(75, 35)
@@ -389,6 +428,8 @@ Partial Class Alumnos
         ' 
         ' ButtonAnterior
         ' 
+        ButtonAnterior.FlatStyle = FlatStyle.Popup
+        ButtonAnterior.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonAnterior.Location = New Point(125, 8)
         ButtonAnterior.Name = "ButtonAnterior"
         ButtonAnterior.Size = New Size(75, 35)
@@ -398,6 +439,8 @@ Partial Class Alumnos
         ' 
         ' ButtonPrimero
         ' 
+        ButtonPrimero.FlatStyle = FlatStyle.Flat
+        ButtonPrimero.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonPrimero.Location = New Point(0, 8)
         ButtonPrimero.Name = "ButtonPrimero"
         ButtonPrimero.Size = New Size(75, 35)
@@ -407,19 +450,21 @@ Partial Class Alumnos
         ' 
         ' ButtonAceptar
         ' 
+        ButtonAceptar.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonAceptar.Location = New Point(800, 664)
         ButtonAceptar.Name = "ButtonAceptar"
         ButtonAceptar.Size = New Size(75, 35)
-        ButtonAceptar.TabIndex = 3
+        ButtonAceptar.TabIndex = 4
         ButtonAceptar.Text = "Aceptar"
         ButtonAceptar.UseVisualStyleBackColor = True
         ' 
         ' ButtonCancelar
         ' 
+        ButtonCancelar.Font = New Font("MV Boli", 8.25F, FontStyle.Bold, GraphicsUnit.Point)
         ButtonCancelar.Location = New Point(450, 664)
         ButtonCancelar.Name = "ButtonCancelar"
         ButtonCancelar.Size = New Size(75, 35)
-        ButtonCancelar.TabIndex = 2
+        ButtonCancelar.TabIndex = 3
         ButtonCancelar.Text = "Cancelar"
         ButtonCancelar.UseVisualStyleBackColor = True
         ' 
@@ -427,6 +472,8 @@ Partial Class Alumnos
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1234, 711)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
@@ -436,6 +483,7 @@ Partial Class Alumnos
         Controls.Add(GroupBoxRellenarDatos)
         MainMenuStrip = MenuStripAlumnos
         Name = "Alumnos"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Alumnos"
         MenuStripAlumnos.ResumeLayout(False)
         MenuStripAlumnos.PerformLayout()
@@ -472,8 +520,6 @@ Partial Class Alumnos
     Friend WithEvents TextBoxNacionalidad As TextBox
     Friend WithEvents GroupBoxRellenarDatos As GroupBox
     Friend WithEvents GroupBoxBuscar As GroupBox
-    Friend WithEvents ComboBoxMesFechaNacimiento As ComboBox
-    Friend WithEvents ComboBoxDiaFechaNacimiento As ComboBox
     Friend WithEvents ButtonUltimo As Button
     Friend WithEvents ButtonSiguiente As Button
     Friend WithEvents ButtonAceptar As Button
@@ -486,4 +532,7 @@ Partial Class Alumnos
     Friend WithEvents LabelBuscar As Label
     Friend WithEvents TextBoxBuscar As TextBox
     Friend WithEvents ButtonBuscar As Button
+    Friend WithEvents VolverToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TextBoxDiaFechaNacimiento As TextBox
+    Friend WithEvents TextBoxMesFechaNacimiento As TextBox
 End Class

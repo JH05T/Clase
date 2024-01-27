@@ -8,23 +8,17 @@ Public Class Alumnos
 
     Private Sub Alumnos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.FormBorderStyle = FormBorderStyle.FixedSingle
+        Me.MinimizeBox = False
+        Me.MaximizeBox = False
+
         VisualizarToolStripMenuItem.PerformClick()
 
         ConfigurarListView()
 
         CargarListView(BaseDeDatos.LeerDatosAlumnos())
 
-        For i As Integer = 0 To 31
-
-            ComboBoxDiaFechaNacimiento.Items.Add(i)
-
-        Next
-
-        For i As Integer = 0 To 12
-
-            ComboBoxMesFechaNacimiento.Items.Add(i)
-
-        Next
+        ConfigurarColores()
 
     End Sub
 
@@ -48,8 +42,8 @@ Public Class Alumnos
 
             If DateOnly.TryParse(itemSeleccionado.SubItems(8).Text, FechaNacimiento) Then
 
-                ComboBoxDiaFechaNacimiento.Text = FechaNacimiento.Day.ToString
-                ComboBoxMesFechaNacimiento.Text = FechaNacimiento.Month.ToString
+                TextBoxDiaFechaNacimiento.Text = FechaNacimiento.Day.ToString
+                TextBoxMesFechaNacimiento.Text = FechaNacimiento.Month.ToString
                 TextBoxFechaNacimiento.Text = FechaNacimiento.Year.ToString
 
             Else
@@ -112,25 +106,33 @@ Public Class Alumnos
 
     Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
 
-        Dim Alumno = BaseDeDatos.LeerDatosAlumnoBuscado(New Alumno With {.Id = TextBoxBuscar.Text})
+        If TextBoxBuscar.Text.Equals("") Then
 
-        If Alumno.Id.Equals(0) Then
-
-            vaciarGroupBoxDatos()
+            MsgBox("Introduce un ID para poder buscar al alumno")
 
         Else
 
-            TextBoxId.Text = Alumno.Id
-            TextBoxNombre.Text = Alumno.Nombre
-            TextBoxApellidos.Text = Alumno.Apellidos
-            TextBoxDireccion.Text = Alumno.Direccion
-            TextBoxLocalidad.Text = Alumno.Localidad
-            TextBoxMovil.Text = Alumno.Movil
-            TextBoxEmail.Text = Alumno.Email
-            ComboBoxDiaFechaNacimiento.Text = Alumno.FechaNacimiento.Day.ToString
-            ComboBoxMesFechaNacimiento.Text = Alumno.FechaNacimiento.Month.ToString
-            TextBoxFechaNacimiento.Text = Alumno.FechaNacimiento.Year.ToString
-            TextBoxNacionalidad.Text = Alumno.Nacionalidad
+            Dim Alumno = BaseDeDatos.LeerDatosAlumnoBuscado(New Alumno With {.Id = TextBoxBuscar.Text})
+
+            If Alumno.Id.Equals(0) Then
+
+                vaciarGroupBoxDatos()
+
+            Else
+
+                TextBoxId.Text = Alumno.Id
+                TextBoxNombre.Text = Alumno.Nombre
+                TextBoxApellidos.Text = Alumno.Apellidos
+                TextBoxDireccion.Text = Alumno.Direccion
+                TextBoxLocalidad.Text = Alumno.Localidad
+                TextBoxMovil.Text = Alumno.Movil
+                TextBoxEmail.Text = Alumno.Email
+                TextBoxDiaFechaNacimiento.Text = Alumno.FechaNacimiento.Day.ToString
+                TextBoxMesFechaNacimiento.Text = Alumno.FechaNacimiento.Month.ToString
+                TextBoxFechaNacimiento.Text = Alumno.FechaNacimiento.Year.ToString
+                TextBoxNacionalidad.Text = Alumno.Nacionalidad
+
+            End If
 
         End If
 
@@ -172,10 +174,10 @@ Public Class Alumnos
 
     Private Sub AgregarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AgregarToolStripMenuItem.Click
 
-        AgregarToolStripMenuItem.BackColor = Color.Beige
-        EliminarToolStripMenuItem.BackColor = Color.White
-        ModificarToolStripMenuItem.BackColor = Color.White
-        VisualizarToolStripMenuItem.BackColor = Color.White
+        AgregarToolStripMenuItem.BackColor = PaletaColores.Rosa
+        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
 
         opcion = "Agregar"
 
@@ -187,10 +189,10 @@ Public Class Alumnos
 
     Private Sub EliminarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EliminarToolStripMenuItem.Click
 
-        EliminarToolStripMenuItem.BackColor = Color.Beige
-        AgregarToolStripMenuItem.BackColor = Color.White
-        ModificarToolStripMenuItem.BackColor = Color.White
-        VisualizarToolStripMenuItem.BackColor = Color.White
+        EliminarToolStripMenuItem.BackColor = PaletaColores.Rosa
+        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
 
         opcion = "Eliminar"
 
@@ -201,10 +203,10 @@ Public Class Alumnos
     End Sub
     Private Sub ModificarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModificarToolStripMenuItem.Click
 
-        ModificarToolStripMenuItem.BackColor = Color.Beige
-        EliminarToolStripMenuItem.BackColor = Color.White
-        AgregarToolStripMenuItem.BackColor = Color.White
-        VisualizarToolStripMenuItem.BackColor = Color.White
+        ModificarToolStripMenuItem.BackColor = PaletaColores.Rosa
+        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
 
         opcion = "Modificar"
 
@@ -216,16 +218,23 @@ Public Class Alumnos
 
     Private Sub VisualizarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizarToolStripMenuItem.Click
 
-        AgregarToolStripMenuItem.BackColor = Color.White
-        EliminarToolStripMenuItem.BackColor = Color.White
-        ModificarToolStripMenuItem.BackColor = Color.White
-        VisualizarToolStripMenuItem.BackColor = Color.Beige
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.Rosa
+        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
 
         opcion = "Visualizar"
 
         ButtonAceptar.Hide()
 
         ButtonCancelar.Hide()
+
+    End Sub
+
+    Private Sub VolverToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VolverToolStripMenuItem.Click
+
+        Me.Hide()
+        Inicio.Show()
 
     End Sub
 
@@ -243,9 +252,9 @@ Public Class Alumnos
         ListView.Columns.Add("Apellidos", 150, HorizontalAlignment.Center)
         ListView.Columns.Add("Dirección", 150, HorizontalAlignment.Center)
         ListView.Columns.Add("Localidad", 100, HorizontalAlignment.Center)
-        ListView.Columns.Add("Móvil", 75, HorizontalAlignment.Center)
+        ListView.Columns.Add("Móvil", 100, HorizontalAlignment.Center)
         ListView.Columns.Add("Email", 150, HorizontalAlignment.Center)
-        ListView.Columns.Add("F. Nacimiento", 90, HorizontalAlignment.Center)
+        ListView.Columns.Add("F. Nacimiento", 100, HorizontalAlignment.Center)
         ListView.Columns.Add("Nacionalidad", 100, HorizontalAlignment.Center)
 
     End Sub
@@ -276,6 +285,50 @@ Public Class Alumnos
 
     End Sub
 
+    Private Sub ConfigurarColores()
+
+        MenuStripAlumnos.BackColor = PaletaColores.AzulCielo
+
+        For Each control As Control In GroupBoxRellenarDatos.Controls
+
+            If TypeOf control Is System.Windows.Forms.TextBox Then
+
+                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.LilaClaro
+                DirectCast(control, System.Windows.Forms.TextBox).BorderStyle = BorderStyle.FixedSingle
+
+            End If
+
+        Next
+
+        For Each control As Control In GroupBoxBuscar.Controls
+
+            If TypeOf control Is System.Windows.Forms.Button Then
+
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
+
+            ElseIf TypeOf control Is System.Windows.Forms.TextBox Then
+
+                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.LilaClaro
+                DirectCast(control, System.Windows.Forms.TextBox).BorderStyle = BorderStyle.FixedSingle
+
+            End If
+
+        Next
+
+        For Each control As Control In Me.Controls
+
+            If TypeOf control Is System.Windows.Forms.Button Then
+
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
+
+            End If
+
+        Next
+
+    End Sub
+
     Private Sub vaciarGroupBoxDatos()
 
         For Each control As Control In GroupBoxRellenarDatos.Controls
@@ -283,10 +336,6 @@ Public Class Alumnos
             If TypeOf control Is System.Windows.Forms.TextBox Then
 
                 DirectCast(control, System.Windows.Forms.TextBox).Clear()
-
-            ElseIf TypeOf control Is System.Windows.Forms.ComboBox Then
-
-                DirectCast(control, System.Windows.Forms.ComboBox).Text = ""
 
             End If
 
@@ -303,7 +352,7 @@ Public Class Alumnos
             .Localidad = TextBoxLocalidad.Text,
             .Movil = TextBoxMovil.Text,
             .Email = TextBoxEmail.Text,
-            .FechaNacimiento = New DateOnly(Integer.Parse(TextBoxFechaNacimiento.Text), Integer.Parse(ComboBoxMesFechaNacimiento.Text), Integer.Parse(ComboBoxDiaFechaNacimiento.Text)),
+            .FechaNacimiento = New DateOnly(Integer.Parse(TextBoxFechaNacimiento.Text), Integer.Parse(TextBoxMesFechaNacimiento.Text), Integer.Parse(TextBoxDiaFechaNacimiento.Text)),
             .Nacionalidad = TextBoxNacionalidad.Text}
 
         BaseDeDatos.AgregarAlumno(Alumno)
@@ -327,7 +376,7 @@ Public Class Alumnos
             .Localidad = TextBoxLocalidad.Text,
             .Movil = TextBoxMovil.Text,
             .Email = TextBoxEmail.Text,
-            .FechaNacimiento = New DateOnly(Integer.Parse(TextBoxFechaNacimiento.Text), Integer.Parse(ComboBoxMesFechaNacimiento.Text), Integer.Parse(ComboBoxDiaFechaNacimiento.Text)),
+            .FechaNacimiento = New DateOnly(Integer.Parse(TextBoxFechaNacimiento.Text), Integer.Parse(TextBoxMesFechaNacimiento.Text), Integer.Parse(TextBoxDiaFechaNacimiento.Text)),
             .Nacionalidad = TextBoxNacionalidad.Text}
 
         BaseDeDatos.ModificarAlumno(Alumno)

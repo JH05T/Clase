@@ -6,6 +6,12 @@ Public Class Inicio
 
         BaseDeDatos.Conectar()
 
+        Me.FormBorderStyle = FormBorderStyle.FixedSingle
+        Me.MinimizeBox = False
+        Me.MaximizeBox = False
+
+        ConfigurarColores()
+
     End Sub
 
     Private Sub ButtonAlumnos_Click(sender As Object, e As EventArgs) Handles ButtonAlumnos.Click
@@ -45,6 +51,21 @@ Public Class Inicio
         BaseDeDatos.Desconectar()
 
         Application.Exit()
+
+    End Sub
+
+    Private Sub ConfigurarColores()
+
+        For Each control As Control In Me.Controls
+
+            If TypeOf control Is System.Windows.Forms.Button Then
+
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
+
+            End If
+
+        Next
 
     End Sub
 
