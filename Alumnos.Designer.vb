@@ -23,7 +23,6 @@ Partial Class Alumnos
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         MenuStripAlumnos = New MenuStrip()
-        ToolStripMenuItem1 = New ToolStripMenuItem()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
@@ -48,35 +47,34 @@ Partial Class Alumnos
         TextBoxFechaNacimiento = New TextBox()
         TextBoxNacionalidad = New TextBox()
         GroupBoxRellenarDatos = New GroupBox()
+        LabelYear = New Label()
+        LabelMes = New Label()
+        LabelDia = New Label()
         ComboBoxMesFechaNacimiento = New ComboBox()
         ComboBoxDiaFechaNacimiento = New ComboBox()
-        GroupBoxBotones = New GroupBox()
+        GroupBoxBuscar = New GroupBox()
+        LabelBuscar = New Label()
+        TextBoxBuscar = New TextBox()
+        ButtonBuscar = New Button()
         ButtonUltimo = New Button()
         ButtonSiguiente = New Button()
-        ButtonAceptar = New Button()
-        ButtonCancelar = New Button()
         ButtonAnterior = New Button()
         ButtonPrimero = New Button()
-        LabelDia = New Label()
-        LabelMes = New Label()
-        LabelYear = New Label()
+        ButtonAceptar = New Button()
+        ButtonCancelar = New Button()
         MenuStripAlumnos.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
-        GroupBoxBotones.SuspendLayout()
+        GroupBoxBuscar.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStripAlumnos
         ' 
-        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {ToolStripMenuItem1, AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem})
+        MenuStripAlumnos.BackColor = Color.White
+        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem})
         MenuStripAlumnos.Location = New Point(0, 0)
         MenuStripAlumnos.Name = "MenuStripAlumnos"
         MenuStripAlumnos.Size = New Size(1234, 24)
         MenuStripAlumnos.TabIndex = 1
-        ' 
-        ' ToolStripMenuItem1
-        ' 
-        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        ToolStripMenuItem1.Size = New Size(12, 20)
         ' 
         ' AgregarToolStripMenuItem
         ' 
@@ -109,7 +107,7 @@ Partial Class Alumnos
         ListView.Location = New Point(117, 400)
         ListView.Name = "ListView"
         ListView.Size = New Size(1000, 256)
-        ListView.TabIndex = 11
+        ListView.TabIndex = 2
         ListView.UseCompatibleStateImageBehavior = False
         ' 
         ' LabelId
@@ -197,6 +195,7 @@ Partial Class Alumnos
         ' 
         TextBoxId.Location = New Point(127, 50)
         TextBoxId.Name = "TextBoxId"
+        TextBoxId.ReadOnly = True
         TextBoxId.Size = New Size(150, 23)
         TextBoxId.TabIndex = 0
         ' 
@@ -287,6 +286,33 @@ Partial Class Alumnos
         GroupBoxRellenarDatos.TabIndex = 0
         GroupBoxRellenarDatos.TabStop = False
         ' 
+        ' LabelYear
+        ' 
+        LabelYear.Location = New Point(585, 224)
+        LabelYear.Name = "LabelYear"
+        LabelYear.Size = New Size(50, 23)
+        LabelYear.TabIndex = 14
+        LabelYear.Text = "Año"
+        LabelYear.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' LabelMes
+        ' 
+        LabelMes.Location = New Point(535, 224)
+        LabelMes.Name = "LabelMes"
+        LabelMes.Size = New Size(50, 23)
+        LabelMes.TabIndex = 13
+        LabelMes.Text = "Mes"
+        LabelMes.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' LabelDia
+        ' 
+        LabelDia.Location = New Point(485, 224)
+        LabelDia.Name = "LabelDia"
+        LabelDia.Size = New Size(50, 23)
+        LabelDia.TabIndex = 12
+        LabelDia.Text = "Día"
+        LabelDia.TextAlign = ContentAlignment.MiddleCenter
+        ' 
         ' ComboBoxMesFechaNacimiento
         ' 
         ComboBoxMesFechaNacimiento.FormattingEnabled = True
@@ -303,19 +329,45 @@ Partial Class Alumnos
         ComboBoxDiaFechaNacimiento.Size = New Size(50, 23)
         ComboBoxDiaFechaNacimiento.TabIndex = 7
         ' 
-        ' GroupBoxBotones
+        ' GroupBoxBuscar
         ' 
-        GroupBoxBotones.Controls.Add(ButtonUltimo)
-        GroupBoxBotones.Controls.Add(ButtonSiguiente)
-        GroupBoxBotones.Controls.Add(ButtonAceptar)
-        GroupBoxBotones.Controls.Add(ButtonCancelar)
-        GroupBoxBotones.Controls.Add(ButtonAnterior)
-        GroupBoxBotones.Controls.Add(ButtonPrimero)
-        GroupBoxBotones.Location = New Point(117, 349)
-        GroupBoxBotones.Name = "GroupBoxBotones"
-        GroupBoxBotones.Size = New Size(1000, 44)
-        GroupBoxBotones.TabIndex = 0
-        GroupBoxBotones.TabStop = False
+        GroupBoxBuscar.Controls.Add(LabelBuscar)
+        GroupBoxBuscar.Controls.Add(TextBoxBuscar)
+        GroupBoxBuscar.Controls.Add(ButtonBuscar)
+        GroupBoxBuscar.Controls.Add(ButtonUltimo)
+        GroupBoxBuscar.Controls.Add(ButtonSiguiente)
+        GroupBoxBuscar.Controls.Add(ButtonAnterior)
+        GroupBoxBuscar.Controls.Add(ButtonPrimero)
+        GroupBoxBuscar.Location = New Point(117, 349)
+        GroupBoxBuscar.Name = "GroupBoxBuscar"
+        GroupBoxBuscar.Size = New Size(1000, 44)
+        GroupBoxBuscar.TabIndex = 1
+        GroupBoxBuscar.TabStop = False
+        ' 
+        ' LabelBuscar
+        ' 
+        LabelBuscar.Location = New Point(245, 15)
+        LabelBuscar.Name = "LabelBuscar"
+        LabelBuscar.Size = New Size(300, 23)
+        LabelBuscar.TabIndex = 7
+        LabelBuscar.Text = "Introduce la ID del alumno que estás buscando:"
+        LabelBuscar.TextAlign = ContentAlignment.MiddleCenter
+        ' 
+        ' TextBoxBuscar
+        ' 
+        TextBoxBuscar.Location = New Point(550, 15)
+        TextBoxBuscar.Name = "TextBoxBuscar"
+        TextBoxBuscar.Size = New Size(150, 23)
+        TextBoxBuscar.TabIndex = 2
+        ' 
+        ' ButtonBuscar
+        ' 
+        ButtonBuscar.Location = New Point(705, 8)
+        ButtonBuscar.Name = "ButtonBuscar"
+        ButtonBuscar.Size = New Size(35, 35)
+        ButtonBuscar.TabIndex = 3
+        ButtonBuscar.Text = "ButtonBuscar"
+        ButtonBuscar.UseVisualStyleBackColor = True
         ' 
         ' ButtonUltimo
         ' 
@@ -335,24 +387,6 @@ Partial Class Alumnos
         ButtonSiguiente.Text = "Siguiente"
         ButtonSiguiente.UseVisualStyleBackColor = True
         ' 
-        ' ButtonAceptar
-        ' 
-        ButtonAceptar.Location = New Point(575, 8)
-        ButtonAceptar.Name = "ButtonAceptar"
-        ButtonAceptar.Size = New Size(75, 35)
-        ButtonAceptar.TabIndex = 3
-        ButtonAceptar.Text = "Aceptar"
-        ButtonAceptar.UseVisualStyleBackColor = True
-        ' 
-        ' ButtonCancelar
-        ' 
-        ButtonCancelar.Location = New Point(350, 8)
-        ButtonCancelar.Name = "ButtonCancelar"
-        ButtonCancelar.Size = New Size(75, 35)
-        ButtonCancelar.TabIndex = 2
-        ButtonCancelar.Text = "Cancelar"
-        ButtonCancelar.UseVisualStyleBackColor = True
-        ' 
         ' ButtonAnterior
         ' 
         ButtonAnterior.Location = New Point(125, 8)
@@ -371,41 +405,34 @@ Partial Class Alumnos
         ButtonPrimero.Text = "Primero"
         ButtonPrimero.UseVisualStyleBackColor = True
         ' 
-        ' LabelDia
+        ' ButtonAceptar
         ' 
-        LabelDia.Location = New Point(485, 224)
-        LabelDia.Name = "LabelDia"
-        LabelDia.Size = New Size(50, 23)
-        LabelDia.TabIndex = 12
-        LabelDia.Text = "Día"
-        LabelDia.TextAlign = ContentAlignment.MiddleCenter
+        ButtonAceptar.Location = New Point(800, 664)
+        ButtonAceptar.Name = "ButtonAceptar"
+        ButtonAceptar.Size = New Size(75, 35)
+        ButtonAceptar.TabIndex = 3
+        ButtonAceptar.Text = "Aceptar"
+        ButtonAceptar.UseVisualStyleBackColor = True
         ' 
-        ' LabelMes
+        ' ButtonCancelar
         ' 
-        LabelMes.Location = New Point(535, 224)
-        LabelMes.Name = "LabelMes"
-        LabelMes.Size = New Size(50, 23)
-        LabelMes.TabIndex = 13
-        LabelMes.Text = "Mes"
-        LabelMes.TextAlign = ContentAlignment.MiddleCenter
-        ' 
-        ' LabelYear
-        ' 
-        LabelYear.Location = New Point(585, 224)
-        LabelYear.Name = "LabelYear"
-        LabelYear.Size = New Size(50, 23)
-        LabelYear.TabIndex = 14
-        LabelYear.Text = "Año"
-        LabelYear.TextAlign = ContentAlignment.MiddleCenter
+        ButtonCancelar.Location = New Point(450, 664)
+        ButtonCancelar.Name = "ButtonCancelar"
+        ButtonCancelar.Size = New Size(75, 35)
+        ButtonCancelar.TabIndex = 2
+        ButtonCancelar.Text = "Cancelar"
+        ButtonCancelar.UseVisualStyleBackColor = True
         ' 
         ' Alumnos
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1234, 711)
-        Controls.Add(GroupBoxBotones)
+        Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
+        Controls.Add(ButtonAceptar)
         Controls.Add(MenuStripAlumnos)
+        Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
         MainMenuStrip = MenuStripAlumnos
         Name = "Alumnos"
@@ -414,7 +441,8 @@ Partial Class Alumnos
         MenuStripAlumnos.PerformLayout()
         GroupBoxRellenarDatos.ResumeLayout(False)
         GroupBoxRellenarDatos.PerformLayout()
-        GroupBoxBotones.ResumeLayout(False)
+        GroupBoxBuscar.ResumeLayout(False)
+        GroupBoxBuscar.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -423,7 +451,6 @@ Partial Class Alumnos
     Friend WithEvents EliminarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VisualizarToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ListView As ListView
     Friend WithEvents LabelId As Label
     Friend WithEvents LabelNombre As Label
@@ -444,7 +471,7 @@ Partial Class Alumnos
     Friend WithEvents TextBoxFechaNacimiento As TextBox
     Friend WithEvents TextBoxNacionalidad As TextBox
     Friend WithEvents GroupBoxRellenarDatos As GroupBox
-    Friend WithEvents GroupBoxBotones As GroupBox
+    Friend WithEvents GroupBoxBuscar As GroupBox
     Friend WithEvents ComboBoxMesFechaNacimiento As ComboBox
     Friend WithEvents ComboBoxDiaFechaNacimiento As ComboBox
     Friend WithEvents ButtonUltimo As Button
@@ -456,4 +483,7 @@ Partial Class Alumnos
     Friend WithEvents LabelYear As Label
     Friend WithEvents LabelMes As Label
     Friend WithEvents LabelDia As Label
+    Friend WithEvents LabelBuscar As Label
+    Friend WithEvents TextBoxBuscar As TextBox
+    Friend WithEvents ButtonBuscar As Button
 End Class
