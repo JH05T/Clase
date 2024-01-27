@@ -34,7 +34,7 @@ Partial Class Inicio
         ' ButtonAlumnos
         ' 
         ButtonAlumnos.FlatStyle = FlatStyle.System
-        ButtonAlumnos.Font = New Font("Gabriola", 24.75F, FontStyle.Regular, GraphicsUnit.Point)
+        ButtonAlumnos.Font = New Font("Gabriola", 21.75F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonAlumnos.Location = New Point(40, 80)
         ButtonAlumnos.Name = "ButtonAlumnos"
         ButtonAlumnos.Size = New Size(150, 75)
@@ -44,7 +44,7 @@ Partial Class Inicio
         ' 
         ' ButtonAsignaturas
         ' 
-        ButtonAsignaturas.Font = New Font("Gabriola", 24.75F, FontStyle.Regular, GraphicsUnit.Point)
+        ButtonAsignaturas.Font = New Font("Gabriola", 21.75F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonAsignaturas.Location = New Point(40, 240)
         ButtonAsignaturas.Name = "ButtonAsignaturas"
         ButtonAsignaturas.Size = New Size(150, 75)
@@ -54,7 +54,7 @@ Partial Class Inicio
         ' 
         ' ButtonNotas
         ' 
-        ButtonNotas.Font = New Font("Gabriola", 24.75F, FontStyle.Regular, GraphicsUnit.Point)
+        ButtonNotas.Font = New Font("Gabriola", 21.75F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonNotas.Location = New Point(40, 560)
         ButtonNotas.Name = "ButtonNotas"
         ButtonNotas.Size = New Size(150, 75)
@@ -64,7 +64,7 @@ Partial Class Inicio
         ' 
         ' ButtonProfesores
         ' 
-        ButtonProfesores.Font = New Font("Gabriola", 24.75F, FontStyle.Regular, GraphicsUnit.Point)
+        ButtonProfesores.Font = New Font("Gabriola", 21.75F, FontStyle.Regular, GraphicsUnit.Point)
         ButtonProfesores.Location = New Point(40, 400)
         ButtonProfesores.Name = "ButtonProfesores"
         ButtonProfesores.Size = New Size(150, 75)
