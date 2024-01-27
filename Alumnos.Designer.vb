@@ -110,7 +110,7 @@ Partial Class Alumnos
         ' 
         ' ListView
         ' 
-        ListView.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        ListView.Font = New Font("Segoe Print", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
         ListView.FullRowSelect = True
         ListView.GridLines = True
         ListView.Location = New Point(117, 400)
@@ -481,6 +481,7 @@ Partial Class Alumnos
         Controls.Add(MenuStripAlumnos)
         Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MainMenuStrip = MenuStripAlumnos
         Name = "Alumnos"
         StartPosition = FormStartPosition.CenterScreen

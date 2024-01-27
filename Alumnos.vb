@@ -360,10 +360,16 @@ Public Class Alumnos
     End Sub
     Private Sub EliminarAlumno()
 
-        Dim Alumno As Alumno = New Alumno With {
+        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar este alumno?", "Confirmación", MessageBoxButtons.YesNo)
+
+        If result = DialogResult.Yes Then
+
+            Dim Alumno As Alumno = New Alumno With {
             .Id = TextBoxId.Text}
 
-        BaseDeDatos.EliminarAlumno(Alumno)
+            BaseDeDatos.EliminarAlumno(Alumno)
+
+        End If
 
     End Sub
     Private Sub ModificarAlumno()
