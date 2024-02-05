@@ -28,7 +28,7 @@ Partial Class Profesores
         ModificarToolStripMenuItem = New ToolStripMenuItem()
         VisualizarToolStripMenuItem = New ToolStripMenuItem()
         VolverToolStripMenuItem = New ToolStripMenuItem()
-        MenuStripAlumnos = New MenuStrip()
+        MenuStrip = New MenuStrip()
         TextBoxId = New TextBox()
         TextBoxNombre = New TextBox()
         TextBoxApellidos = New TextBox()
@@ -49,7 +49,7 @@ Partial Class Profesores
         TextBoxBuscar = New TextBox()
         LabelBuscar = New Label()
         GroupBoxBuscar = New GroupBox()
-        MenuStripAlumnos.SuspendLayout()
+        MenuStrip.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         GroupBoxBuscar.SuspendLayout()
         SuspendLayout()
@@ -84,14 +84,14 @@ Partial Class Profesores
         VolverToolStripMenuItem.Size = New Size(51, 20)
         VolverToolStripMenuItem.Text = "Volver"
         ' 
-        ' MenuStripAlumnos
+        ' MenuStrip
         ' 
-        MenuStripAlumnos.BackColor = Color.White
-        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
-        MenuStripAlumnos.Location = New Point(0, 0)
-        MenuStripAlumnos.Name = "MenuStripAlumnos"
-        MenuStripAlumnos.Size = New Size(1234, 24)
-        MenuStripAlumnos.TabIndex = 7
+        MenuStrip.BackColor = Color.White
+        MenuStrip.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
+        MenuStrip.Location = New Point(0, 0)
+        MenuStrip.Name = "MenuStrip"
+        MenuStrip.Size = New Size(1234, 24)
+        MenuStrip.TabIndex = 7
         ' 
         ' TextBoxId
         ' 
@@ -314,12 +314,13 @@ Partial Class Profesores
         Controls.Add(ButtonAceptar)
         Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
-        Controls.Add(MenuStripAlumnos)
+        Controls.Add(MenuStrip)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "Profesores"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Profesores"
-        MenuStripAlumnos.ResumeLayout(False)
-        MenuStripAlumnos.PerformLayout()
+        MenuStrip.ResumeLayout(False)
+        MenuStrip.PerformLayout()
         GroupBoxRellenarDatos.ResumeLayout(False)
         GroupBoxRellenarDatos.PerformLayout()
         GroupBoxBuscar.ResumeLayout(False)
@@ -333,7 +334,7 @@ Partial Class Profesores
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VisualizarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VolverToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents MenuStripAlumnos As MenuStrip
+    Friend WithEvents MenuStrip As MenuStrip
     Friend WithEvents LabelNacionalidad As Label
     Friend WithEvents TextBoxId As TextBox
     Friend WithEvents LabelFechaNacimiento As Label

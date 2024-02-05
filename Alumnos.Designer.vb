@@ -23,7 +23,7 @@ Partial Class Alumnos
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Alumnos))
-        MenuStripAlumnos = New MenuStrip()
+        MenuStrip = New MenuStrip()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
@@ -64,19 +64,19 @@ Partial Class Alumnos
         ButtonPrimero = New Button()
         ButtonAceptar = New Button()
         ButtonCancelar = New Button()
-        MenuStripAlumnos.SuspendLayout()
+        MenuStrip.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         GroupBoxBuscar.SuspendLayout()
         SuspendLayout()
         ' 
-        ' MenuStripAlumnos
+        ' MenuStrip
         ' 
-        MenuStripAlumnos.BackColor = Color.White
-        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
-        MenuStripAlumnos.Location = New Point(0, 0)
-        MenuStripAlumnos.Name = "MenuStripAlumnos"
-        MenuStripAlumnos.Size = New Size(1234, 24)
-        MenuStripAlumnos.TabIndex = 1
+        MenuStrip.BackColor = Color.White
+        MenuStrip.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
+        MenuStrip.Location = New Point(0, 0)
+        MenuStrip.Name = "MenuStrip"
+        MenuStrip.Size = New Size(1234, 24)
+        MenuStrip.TabIndex = 1
         ' 
         ' AgregarToolStripMenuItem
         ' 
@@ -478,16 +478,16 @@ Partial Class Alumnos
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
         Controls.Add(ButtonAceptar)
-        Controls.Add(MenuStripAlumnos)
+        Controls.Add(MenuStrip)
         Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
-        MainMenuStrip = MenuStripAlumnos
+        MainMenuStrip = MenuStrip
         Name = "Alumnos"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Alumnos"
-        MenuStripAlumnos.ResumeLayout(False)
-        MenuStripAlumnos.PerformLayout()
+        MenuStrip.ResumeLayout(False)
+        MenuStrip.PerformLayout()
         GroupBoxRellenarDatos.ResumeLayout(False)
         GroupBoxRellenarDatos.PerformLayout()
         GroupBoxBuscar.ResumeLayout(False)
@@ -495,7 +495,7 @@ Partial Class Alumnos
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Friend WithEvents MenuStripAlumnos As MenuStrip
+    Friend WithEvents MenuStrip As MenuStrip
     Friend WithEvents AgregarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EliminarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem

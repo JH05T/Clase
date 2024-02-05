@@ -23,8 +23,6 @@ Public Class Profesores
 
     Private Sub ListView_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListView.SelectedIndexChanged
 
-        Dim FechaNacimiento As DateOnly
-
         If ListView.SelectedItems.Count > 0 Then
 
             Dim indiceSeleccionado As Integer = ListView.SelectedIndices(0)
@@ -215,7 +213,7 @@ Public Class Profesores
 
     End Sub
 
-    Private Sub Alumnos_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
+    Private Sub Profesores_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
 
         Inicio.Close()
 
@@ -231,7 +229,7 @@ Public Class Profesores
 
     End Sub
 
-    Private Sub CargarListView(DatosAlumnos As DataSet)
+    Private Sub CargarListView(DatosProfesores As DataSet)
 
         Dim ElementoList As ListViewItem
 
@@ -239,14 +237,14 @@ Public Class Profesores
 
         ListView.View = View.Details
 
-        For pos As Integer = 0 To DatosAlumnos.Tables(0).Rows.Count - 1
+        For pos As Integer = 0 To DatosProfesores.Tables(0).Rows.Count - 1
 
-            ElementoList = ListView.Items.Add(DatosAlumnos.Tables(0).Rows(pos).Item(0))
+            ElementoList = ListView.Items.Add(DatosProfesores.Tables(0).Rows(pos).Item(0))
 
-            ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(0))
-            ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(1))
-            ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(2))
-            ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(3))
+            ElementoList.SubItems.Add(DatosProfesores.Tables(0).Rows(pos).Item(0))
+            ElementoList.SubItems.Add(DatosProfesores.Tables(0).Rows(pos).Item(1))
+            ElementoList.SubItems.Add(DatosProfesores.Tables(0).Rows(pos).Item(2))
+            ElementoList.SubItems.Add(DatosProfesores.Tables(0).Rows(pos).Item(3))
 
         Next
 
@@ -254,7 +252,7 @@ Public Class Profesores
 
     Private Sub ConfigurarColores()
 
-        MenuStripAlumnos.BackColor = PaletaColores.AzulCielo
+        MenuStrip.BackColor = PaletaColores.AzulCielo
 
         For Each control As Control In GroupBoxRellenarDatos.Controls
 
@@ -347,6 +345,5 @@ Public Class Profesores
         BaseDeDatos.ModificarProfesor(Profesor)
 
     End Sub
-
 
 End Class

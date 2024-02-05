@@ -287,7 +287,7 @@ Public Class Alumnos
 
     Private Sub ConfigurarColores()
 
-        MenuStripAlumnos.BackColor = PaletaColores.AzulCielo
+        MenuStrip.BackColor = PaletaColores.AzulCielo
 
         For Each control As Control In GroupBoxRellenarDatos.Controls
 

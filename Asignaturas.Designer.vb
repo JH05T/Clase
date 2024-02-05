@@ -37,13 +37,13 @@ Partial Class Asignaturas
         GroupBoxRellenarDatos = New GroupBox()
         LabelId = New Label()
         LabelNombre = New Label()
-        LabelApellidos = New Label()
-        LabelDepartamento = New Label()
-        TextBoxDepartamento = New TextBox()
-        TextBoxApellidos = New TextBox()
+        LabelAula = New Label()
+        LabelProfesor = New Label()
+        TextBoxProfesor = New TextBox()
+        TextBoxAula = New TextBox()
         TextBoxNombre = New TextBox()
         TextBoxId = New TextBox()
-        MenuStripAlumnos = New MenuStrip()
+        MenuStrip = New MenuStrip()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
         ModificarToolStripMenuItem = New ToolStripMenuItem()
@@ -51,7 +51,7 @@ Partial Class Asignaturas
         VolverToolStripMenuItem = New ToolStripMenuItem()
         GroupBoxBuscar.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
-        MenuStripAlumnos.SuspendLayout()
+        MenuStrip.SuspendLayout()
         SuspendLayout()
         ' 
         ' GroupBoxBuscar
@@ -78,7 +78,7 @@ Partial Class Asignaturas
         LabelBuscar.Name = "LabelBuscar"
         LabelBuscar.Size = New Size(310, 23)
         LabelBuscar.TabIndex = 7
-        LabelBuscar.Text = "Introduce la ID del profesor que estás buscando:"
+        LabelBuscar.Text = "Introduce la ID de la asignatura que estás buscando:"
         LabelBuscar.TextAlign = ContentAlignment.MiddleCenter
         ' 
         ' TextBoxBuscar
@@ -178,10 +178,10 @@ Partial Class Asignaturas
         GroupBoxRellenarDatos.BackColor = Color.Transparent
         GroupBoxRellenarDatos.Controls.Add(LabelId)
         GroupBoxRellenarDatos.Controls.Add(LabelNombre)
-        GroupBoxRellenarDatos.Controls.Add(LabelApellidos)
-        GroupBoxRellenarDatos.Controls.Add(LabelDepartamento)
-        GroupBoxRellenarDatos.Controls.Add(TextBoxDepartamento)
-        GroupBoxRellenarDatos.Controls.Add(TextBoxApellidos)
+        GroupBoxRellenarDatos.Controls.Add(LabelAula)
+        GroupBoxRellenarDatos.Controls.Add(LabelProfesor)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxProfesor)
+        GroupBoxRellenarDatos.Controls.Add(TextBoxAula)
         GroupBoxRellenarDatos.Controls.Add(TextBoxNombre)
         GroupBoxRellenarDatos.Controls.Add(TextBoxId)
         GroupBoxRellenarDatos.Location = New Point(120, 83)
@@ -210,41 +210,42 @@ Partial Class Asignaturas
         LabelNombre.Text = "Nombre"
         LabelNombre.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' LabelApellidos
+        ' LabelAula
         ' 
-        LabelApellidos.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        LabelApellidos.Location = New Point(113, 250)
-        LabelApellidos.Name = "LabelApellidos"
-        LabelApellidos.Size = New Size(120, 23)
-        LabelApellidos.TabIndex = 5
-        LabelApellidos.Text = "Apellidos"
-        LabelApellidos.TextAlign = ContentAlignment.MiddleCenter
+        LabelAula.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        LabelAula.Location = New Point(113, 250)
+        LabelAula.Name = "LabelAula"
+        LabelAula.Size = New Size(120, 23)
+        LabelAula.TabIndex = 5
+        LabelAula.Text = "Aula"
+        LabelAula.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' LabelDepartamento
+        ' LabelProfesor
         ' 
-        LabelDepartamento.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
-        LabelDepartamento.Location = New Point(113, 350)
-        LabelDepartamento.Name = "LabelDepartamento"
-        LabelDepartamento.Size = New Size(120, 23)
-        LabelDepartamento.TabIndex = 6
-        LabelDepartamento.Text = "Departamento"
-        LabelDepartamento.TextAlign = ContentAlignment.MiddleCenter
+        LabelProfesor.AccessibleRole = AccessibleRole.None
+        LabelProfesor.Font = New Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point)
+        LabelProfesor.Location = New Point(113, 350)
+        LabelProfesor.Name = "LabelProfesor"
+        LabelProfesor.Size = New Size(120, 23)
+        LabelProfesor.TabIndex = 6
+        LabelProfesor.Text = "Profesor"
+        LabelProfesor.TextAlign = ContentAlignment.MiddleCenter
         ' 
-        ' TextBoxDepartamento
+        ' TextBoxProfesor
         ' 
-        TextBoxDepartamento.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        TextBoxDepartamento.Location = New Point(239, 350)
-        TextBoxDepartamento.Name = "TextBoxDepartamento"
-        TextBoxDepartamento.Size = New Size(150, 29)
-        TextBoxDepartamento.TabIndex = 3
+        TextBoxProfesor.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBoxProfesor.Location = New Point(239, 350)
+        TextBoxProfesor.Name = "TextBoxProfesor"
+        TextBoxProfesor.Size = New Size(150, 29)
+        TextBoxProfesor.TabIndex = 3
         ' 
-        ' TextBoxApellidos
+        ' TextBoxAula
         ' 
-        TextBoxApellidos.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
-        TextBoxApellidos.Location = New Point(239, 250)
-        TextBoxApellidos.Name = "TextBoxApellidos"
-        TextBoxApellidos.Size = New Size(150, 29)
-        TextBoxApellidos.TabIndex = 2
+        TextBoxAula.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
+        TextBoxAula.Location = New Point(239, 250)
+        TextBoxAula.Name = "TextBoxAula"
+        TextBoxAula.Size = New Size(150, 29)
+        TextBoxAula.TabIndex = 2
         ' 
         ' TextBoxNombre
         ' 
@@ -263,14 +264,14 @@ Partial Class Asignaturas
         TextBoxId.Size = New Size(150, 29)
         TextBoxId.TabIndex = 0
         ' 
-        ' MenuStripAlumnos
+        ' MenuStrip
         ' 
-        MenuStripAlumnos.BackColor = Color.White
-        MenuStripAlumnos.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
-        MenuStripAlumnos.Location = New Point(0, 0)
-        MenuStripAlumnos.Name = "MenuStripAlumnos"
-        MenuStripAlumnos.Size = New Size(1234, 24)
-        MenuStripAlumnos.TabIndex = 13
+        MenuStrip.BackColor = Color.White
+        MenuStrip.Items.AddRange(New ToolStripItem() {AgregarToolStripMenuItem, EliminarToolStripMenuItem, ModificarToolStripMenuItem, VisualizarToolStripMenuItem, VolverToolStripMenuItem})
+        MenuStrip.Location = New Point(0, 0)
+        MenuStrip.Name = "MenuStrip"
+        MenuStrip.Size = New Size(1234, 24)
+        MenuStrip.TabIndex = 13
         ' 
         ' AgregarToolStripMenuItem
         ' 
@@ -312,15 +313,16 @@ Partial Class Asignaturas
         Controls.Add(ButtonAceptar)
         Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
-        Controls.Add(MenuStripAlumnos)
+        Controls.Add(MenuStrip)
         Name = "Asignaturas"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Asignaturas"
         GroupBoxBuscar.ResumeLayout(False)
         GroupBoxBuscar.PerformLayout()
         GroupBoxRellenarDatos.ResumeLayout(False)
         GroupBoxRellenarDatos.PerformLayout()
-        MenuStripAlumnos.ResumeLayout(False)
-        MenuStripAlumnos.PerformLayout()
+        MenuStrip.ResumeLayout(False)
+        MenuStrip.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -339,13 +341,13 @@ Partial Class Asignaturas
     Friend WithEvents GroupBoxRellenarDatos As GroupBox
     Friend WithEvents LabelId As Label
     Friend WithEvents LabelNombre As Label
-    Friend WithEvents LabelApellidos As Label
-    Friend WithEvents LabelDepartamento As Label
-    Friend WithEvents TextBoxDepartamento As TextBox
-    Friend WithEvents TextBoxApellidos As TextBox
+    Friend WithEvents LabelAula As Label
+    Friend WithEvents LabelProfesor As Label
+    Friend WithEvents TextBoxProfesor As TextBox
+    Friend WithEvents TextBoxAula As TextBox
     Friend WithEvents TextBoxNombre As TextBox
     Friend WithEvents TextBoxId As TextBox
-    Friend WithEvents MenuStripAlumnos As MenuStrip
+    Friend WithEvents MenuStrip As MenuStrip
     Friend WithEvents AgregarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EliminarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem
