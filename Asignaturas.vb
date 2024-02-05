@@ -8,4 +8,7 @@ Public Class Asignaturas
 
     End Sub
 
+    Private Sub Asignaturas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

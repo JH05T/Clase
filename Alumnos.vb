@@ -247,13 +247,13 @@ Public Class Alumnos
     Private Sub ConfigurarListView()
 
         ListView.Columns.Add("", 0, HorizontalAlignment.Center)
-        ListView.Columns.Add("Id", 25, HorizontalAlignment.Center)
+        ListView.Columns.Add("Id", 30, HorizontalAlignment.Center)
         ListView.Columns.Add("Nombre", 100, HorizontalAlignment.Center)
         ListView.Columns.Add("Apellidos", 150, HorizontalAlignment.Center)
         ListView.Columns.Add("Dirección", 150, HorizontalAlignment.Center)
         ListView.Columns.Add("Localidad", 100, HorizontalAlignment.Center)
         ListView.Columns.Add("Móvil", 100, HorizontalAlignment.Center)
-        ListView.Columns.Add("Email", 150, HorizontalAlignment.Center)
+        ListView.Columns.Add("Email", 145, HorizontalAlignment.Center)
         ListView.Columns.Add("F. Nacimiento", 100, HorizontalAlignment.Center)
         ListView.Columns.Add("Nacionalidad", 100, HorizontalAlignment.Center)
 
