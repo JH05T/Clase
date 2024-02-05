@@ -311,6 +311,16 @@ Public Class Asignaturas
 
     Private Sub AgregarAsignatura()
 
+        Dim Profesor As Integer
+
+        If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
+
+            Return
+
+        End If
+
         Dim Asignatura As Asignatura = New Asignatura With {
         .Nombre = TextBoxNombre.Text,
         .Aula = TextBoxAula.Text,
@@ -336,6 +346,16 @@ Public Class Asignaturas
     End Sub
 
     Private Sub ModificarAsignatura()
+
+        Dim Profesor As Integer
+
+        If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
+
+            Return
+
+        End If
 
         Dim Asignatura As Asignatura = New Asignatura With {
         .Id = TextBoxId.Text,

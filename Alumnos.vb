@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Alumnos
 
@@ -345,6 +344,41 @@ Public Class Alumnos
 
     Private Sub AgregarAlumno()
 
+        Dim Dia, Mes, Year As Integer
+        Dim Movil As Long
+
+        If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
+
+            Return
+
+        End If
+
+        If Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
+
+            Return
+
+        End If
+
+        If Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+
+            Return
+
+        End If
+
+        If Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+
+            MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+
+            Return
+
+        End If
+
         Dim Alumno As Alumno = New Alumno With {
             .Nombre = TextBoxNombre.Text,
             .Apellidos = TextBoxApellidos.Text,
@@ -373,6 +407,41 @@ Public Class Alumnos
 
     End Sub
     Private Sub ModificarAlumno()
+
+        Dim Dia, Mes, Year As Integer
+        Dim Movil As Long
+
+        If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
+
+            Return
+
+        End If
+
+        If Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
+
+            Return
+
+        End If
+
+        If Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+
+            MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+
+            Return
+
+        End If
+
+        If Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+
+            MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+
+            Return
+
+        End If
 
         Dim Alumno As Alumno = New Alumno With {
             .Id = TextBoxId.Text,

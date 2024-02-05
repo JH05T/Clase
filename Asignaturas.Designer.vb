@@ -307,6 +307,8 @@ Partial Class Asignaturas
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1234, 711)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
@@ -314,6 +316,7 @@ Partial Class Asignaturas
         Controls.Add(ButtonCancelar)
         Controls.Add(GroupBoxRellenarDatos)
         Controls.Add(MenuStrip)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "Asignaturas"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Asignaturas"
