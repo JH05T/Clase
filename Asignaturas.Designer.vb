@@ -49,9 +49,11 @@ Partial Class Asignaturas
         ModificarToolStripMenuItem = New ToolStripMenuItem()
         VisualizarToolStripMenuItem = New ToolStripMenuItem()
         VolverToolStripMenuItem = New ToolStripMenuItem()
+        PictureBox = New PictureBox()
         GroupBoxBuscar.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         MenuStrip.SuspendLayout()
+        CType(PictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' GroupBoxBuscar
@@ -303,13 +305,23 @@ Partial Class Asignaturas
         VolverToolStripMenuItem.Size = New Size(51, 20)
         VolverToolStripMenuItem.Text = "Volver"
         ' 
+        ' PictureBox
+        ' 
+        PictureBox.BackgroundImage = CType(resources.GetObject("PictureBox.BackgroundImage"), Image)
+        PictureBox.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox.Location = New Point(627, 83)
+        PictureBox.Name = "PictureBox"
+        PictureBox.Size = New Size(500, 605)
+        PictureBox.TabIndex = 17
+        PictureBox.TabStop = False
+        ' 
         ' Asignaturas
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
-        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1234, 711)
+        Controls.Add(PictureBox)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
         Controls.Add(ButtonAceptar)
@@ -326,6 +338,7 @@ Partial Class Asignaturas
         GroupBoxRellenarDatos.PerformLayout()
         MenuStrip.ResumeLayout(False)
         MenuStrip.PerformLayout()
+        CType(PictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -356,4 +369,5 @@ Partial Class Asignaturas
     Friend WithEvents ModificarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VisualizarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents VolverToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PictureBox As PictureBox
 End Class

@@ -173,10 +173,10 @@ Public Class Alumnos
 
     Private Sub AgregarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AgregarToolStripMenuItem.Click
 
-        AgregarToolStripMenuItem.BackColor = PaletaColores.Rosa
-        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        AgregarToolStripMenuItem.BackColor = PaletaColores.GrisNeutro
+        EliminarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        ModificarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.Blanco
 
         opcion = "Agregar"
 
@@ -188,10 +188,10 @@ Public Class Alumnos
 
     Private Sub EliminarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EliminarToolStripMenuItem.Click
 
-        EliminarToolStripMenuItem.BackColor = PaletaColores.Rosa
-        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        EliminarToolStripMenuItem.BackColor = PaletaColores.GrisNeutro
+        AgregarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        ModificarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.Blanco
 
         opcion = "Eliminar"
 
@@ -200,12 +200,13 @@ Public Class Alumnos
         ButtonCancelar.Show()
 
     End Sub
+
     Private Sub ModificarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ModificarToolStripMenuItem.Click
 
-        ModificarToolStripMenuItem.BackColor = PaletaColores.Rosa
-        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        VisualizarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        ModificarToolStripMenuItem.BackColor = PaletaColores.GrisNeutro
+        AgregarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        EliminarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.Blanco
 
         opcion = "Modificar"
 
@@ -217,10 +218,10 @@ Public Class Alumnos
 
     Private Sub VisualizarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisualizarToolStripMenuItem.Click
 
-        VisualizarToolStripMenuItem.BackColor = PaletaColores.Rosa
-        AgregarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        EliminarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
-        ModificarToolStripMenuItem.BackColor = PaletaColores.AzulCielo
+        VisualizarToolStripMenuItem.BackColor = PaletaColores.GrisNeutro
+        AgregarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        EliminarToolStripMenuItem.BackColor = PaletaColores.Blanco
+        ModificarToolStripMenuItem.BackColor = PaletaColores.Blanco
 
         opcion = "Visualizar"
 
@@ -286,13 +287,13 @@ Public Class Alumnos
 
     Private Sub ConfigurarColores()
 
-        MenuStrip.BackColor = PaletaColores.AzulCielo
+        MenuStrip.BackColor = PaletaColores.Blanco
 
         For Each control As Control In GroupBoxRellenarDatos.Controls
 
             If TypeOf control Is System.Windows.Forms.TextBox Then
 
-                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.LilaClaro
+                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.BeigeClaro
                 DirectCast(control, System.Windows.Forms.TextBox).BorderStyle = BorderStyle.FixedSingle
 
             End If
@@ -303,12 +304,12 @@ Public Class Alumnos
 
             If TypeOf control Is System.Windows.Forms.Button Then
 
-                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.MarronClaro
                 DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
 
             ElseIf TypeOf control Is System.Windows.Forms.TextBox Then
 
-                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.LilaClaro
+                DirectCast(control, System.Windows.Forms.TextBox).BackColor = PaletaColores.BeigeClaro
                 DirectCast(control, System.Windows.Forms.TextBox).BorderStyle = BorderStyle.FixedSingle
 
             End If
@@ -319,7 +320,7 @@ Public Class Alumnos
 
             If TypeOf control Is System.Windows.Forms.Button Then
 
-                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.MarronClaro
                 DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
 
             End If

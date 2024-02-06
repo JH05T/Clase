@@ -49,9 +49,11 @@ Partial Class Profesores
         TextBoxBuscar = New TextBox()
         LabelBuscar = New Label()
         GroupBoxBuscar = New GroupBox()
+        PictureBox = New PictureBox()
         MenuStrip.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         GroupBoxBuscar.SuspendLayout()
+        CType(PictureBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' AgregarToolStripMenuItem
@@ -302,13 +304,23 @@ Partial Class Profesores
         GroupBoxBuscar.TabIndex = 6
         GroupBoxBuscar.TabStop = False
         ' 
+        ' PictureBox
+        ' 
+        PictureBox.BackgroundImage = CType(resources.GetObject("PictureBox.BackgroundImage"), Image)
+        PictureBox.BackgroundImageLayout = ImageLayout.Stretch
+        PictureBox.Location = New Point(627, 60)
+        PictureBox.Name = "PictureBox"
+        PictureBox.Size = New Size(500, 605)
+        PictureBox.TabIndex = 18
+        PictureBox.TabStop = False
+        ' 
         ' Profesores
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
-        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1234, 711)
+        Controls.Add(PictureBox)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
         Controls.Add(ButtonAceptar)
@@ -325,6 +337,7 @@ Partial Class Profesores
         GroupBoxRellenarDatos.PerformLayout()
         GroupBoxBuscar.ResumeLayout(False)
         GroupBoxBuscar.PerformLayout()
+        CType(PictureBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -370,4 +383,5 @@ Partial Class Profesores
     Friend WithEvents GroupBoxBuscar As GroupBox
     Friend WithEvents LabelDepartamento As Label
     Friend WithEvents TextBoxDepartamento As TextBox
+    Friend WithEvents PictureBox As PictureBox
 End Class

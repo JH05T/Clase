@@ -60,7 +60,7 @@ Public Class Inicio
 
             If TypeOf control Is System.Windows.Forms.Button Then
 
-                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.AzulLila
+                DirectCast(control, System.Windows.Forms.Button).BackColor = PaletaColores.MarronClaro
                 DirectCast(control, System.Windows.Forms.Button).FlatStyle = FlatStyle.Flat
 
             End If
