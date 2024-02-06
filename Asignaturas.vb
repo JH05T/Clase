@@ -331,7 +331,7 @@ Public Class Asignaturas
 
         If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
+            MessageBox.Show("Por favor, introduce una ID de profesor válida en el campo Profesor.")
 
             Return
 
