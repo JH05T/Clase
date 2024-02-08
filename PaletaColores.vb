@@ -6,5 +6,4 @@
     Public Shared GrisNeutro As Color = Color.FromArgb(128, 128, 128) '#808080: Un gris neutro que equilibra la paleta y se adapta.
     Public Shared Blanco As Color = Color.FromArgb(240, 240, 240) '#F0F0F0: Un blanco casi puro que aporta claridad y limpieza a la paleta.
 
-
 End Class
