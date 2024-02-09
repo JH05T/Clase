@@ -35,6 +35,15 @@ Module BaseDeDatos
         Public Departamento As String
     End Structure
 
+    Public Structure Nota
+        Public Alumno As Integer
+        Public Asignatura As Integer
+        Public Nota1 As Single
+        Public Nota2 As Single
+        Public Nota3 As Single
+        Public NotaFinal As Single
+    End Structure
+
     '                                       '
     '   VARIABLES                           '
     '                                       '
@@ -44,9 +53,11 @@ Module BaseDeDatos
     Public AdaptadorDatosAlumnos As SQLiteDataAdapter
     Public AdaptadorDatosAsignaturas As SQLiteDataAdapter
     Public AdaptadorDatosProfesores As SQLiteDataAdapter
+    Public AdaptadorDatosNotas As SQLiteDataAdapter
     Public DatosAlumnos As DataSet = New DataSet
     Public DatosAsignaturas As DataSet = New DataSet
     Public DatosProfesores As DataSet = New DataSet
+    Public DatosNotas As DataSet = New DataSet
 
     ''' <summary>
     ''' Establece la conexión con la base de datos SQLite.
@@ -507,6 +518,214 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Id", Profesor.Id)
 
         ' Ejecutar el comando para eliminar al profesor de la base de datos
+        Comando.ExecuteNonQuery()
+
+    End Sub
+
+    '                                       '
+    '   GESTION DE LA TABLA DE NOTAS        '
+    '                                       '
+
+    ''' <summary>
+    ''' Lee todos los datos de la tabla de Notas y los devuelve en un DataSet.
+    ''' </summary>
+    ''' <returns>Un DataSet que contiene todos los datos de la tabla de Notas.</returns>
+    Public Function LeerDatosNotas() As DataSet
+
+        ' Consulta SQL para seleccionar todos los campos de la tabla de Notas
+        Dim Query As String = "select Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal from Cursa"
+
+        ' Crear un nuevo adaptador de datos SQLite con la consulta y la conexión existente
+        Dim AdaptadorDatosNotas As New SQLiteDataAdapter(Query, Conexion)
+
+        ' Limpiar cualquier dato existente en el DataSet
+        DatosNotas.Clear()
+
+        ' Llenar el DataSet con los datos obtenidos del adaptador
+        AdaptadorDatosNotas.Fill(DatosNotas, "Cursa")
+
+        ' Devolver el DataSet lleno
+        Return DatosNotas
+
+    End Function
+
+    ''' <summary>
+    ''' Lee los datos de una nota específica en base al ID del alumno y la asignatura y devuelve un objeto Notas.
+    ''' </summary>
+    ''' <param name="Nota">El objeto Notas con el ID del alumno y la asignatura de la nota a buscar.</param>
+    ''' <returns>Un objeto Notas con los datos de la nota buscada.</returns>
+    Public Function LeerDatosNotaBuscada(Nota As Nota) As Nota
+
+        ' Consulta SQL para seleccionar los campos de la tabla de Notas donde el ID del alumno y la asignatura coinciden con los proporcionados
+        Dim Query As String = "select Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal from Cursa where Alumno = @Alumno and Asignatura = @Asignatura"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando As New SQLiteCommand(Query, Conexion)
+
+        ' Agregar los parámetros de ID del alumno y asignatura al comando
+        Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
+        Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
+
+        ' Ejecutar la consulta y obtener un lector de datos
+        Dim Lector As SQLiteDataReader = Comando.ExecuteReader()
+
+        ' Crear un nuevo objeto Notas para almacenar los datos buscados
+        Dim NotaBuscada As New Nota
+
+        ' Comprobar si se encontraron datos y, si es así, leerlos y almacenarlos en el objeto NotaBuscada
+        If Lector.Read() Then
+
+            NotaBuscada.Alumno = Lector.GetInt32(0)
+            NotaBuscada.Asignatura = Lector.GetInt32(1)
+            NotaBuscada.Nota1 = Lector.GetDouble(2)
+            NotaBuscada.Nota2 = Lector.GetDouble(3)
+            NotaBuscada.Nota3 = Lector.GetDouble(4)
+            NotaBuscada.NotaFinal = Lector.GetDouble(5)
+
+        End If
+
+        ' Cerrar el lector de datos
+        Lector.Close()
+
+        ' Devolver el objeto NotaBuscada con los datos obtenidos
+        Return NotaBuscada
+
+    End Function
+
+    ''' <summary>
+    ''' Lee todos los datos de las notas asociadas a un alumno específico y los devuelve en un DataSet.
+    ''' </summary>
+    ''' <param name="IdAlumno">El ID del alumno cuyas notas se desean recuperar.</param>
+    ''' <returns>Un DataSet que contiene todos los datos de las notas asociadas al alumno especificado.</returns>
+    Public Function LeerDatosNotasAlumno(IdAlumno As Integer) As DataSet
+
+        ' Consulta SQL para seleccionar todos los campos de la tabla de Notas donde el ID del alumno coincide con el proporcionado
+        Dim Query As String = "select Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal from Cursa where Alumno = @IdAlumno"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando = New SQLiteCommand(Query, Conexion)
+
+        ' Agregar el parámetro de ID del alumno al comando
+        Comando.Parameters.AddWithValue("@IdAlumno", IdAlumno)
+
+        ' Crear un nuevo adaptador de datos SQLite con el comando
+        Dim Adaptador = New SQLiteDataAdapter(Comando)
+
+        ' Crear un nuevo DataSet para almacenar los datos de las notas del alumno
+        Dim DatosNotasAlumno As New DataSet()
+
+        ' Limpiar cualquier dato existente en el DataSet
+        DatosNotasAlumno.Clear()
+
+        ' Llenar el DataSet con los datos obtenidos del adaptador
+        Adaptador.Fill(DatosNotasAlumno, "NotasAlumno")
+
+        ' Devolver el DataSet lleno
+        Return DatosNotasAlumno
+
+    End Function
+
+    ''' <summary>
+    ''' Lee todos los datos de las notas asociadas a una asignatura específica y los devuelve en un DataSet.
+    ''' </summary>
+    ''' <param name="IdAsignatura">El ID de la asignatura cuyas notas se desean recuperar.</param>
+    ''' <returns>Un DataSet que contiene todos los datos de las notas asociadas a la asignatura especificada.</returns>
+    Public Function LeerDatosNotasAsignatura(IdAsignatura As Integer) As DataSet
+
+        ' Consulta SQL para seleccionar todos los campos de la tabla de Notas donde el ID de la asignatura coincide con el proporcionado
+        Dim Query As String = "select Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal from Cursa where Asignatura = @IdAsignatura"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando = New SQLiteCommand(Query, Conexion)
+
+        ' Agregar el parámetro de ID de la asignatura al comando
+        Comando.Parameters.AddWithValue("@IdAsignatura", IdAsignatura)
+
+        ' Crear un nuevo adaptador de datos SQLite con el comando
+        Dim Adaptador = New SQLiteDataAdapter(Comando)
+
+        ' Crear un nuevo DataSet para almacenar los datos de las notas de la asignatura
+        Dim DatosNotasAsignatura As New DataSet()
+
+        ' Limpiar cualquier dato existente en el DataSet
+        DatosNotasAsignatura.Clear()
+
+        ' Llenar el DataSet con los datos obtenidos del adaptador
+        Adaptador.Fill(DatosNotasAsignatura, "NotasAsignatura")
+
+        ' Devolver el DataSet lleno
+        Return DatosNotasAsignatura
+
+    End Function
+
+
+    ''' <summary>
+    ''' Agrega una nueva nota a la base de datos.
+    ''' </summary>
+    ''' <param name="Nota">El objeto Notas que contiene los datos de la nueva nota a agregar.</param>
+    Public Sub AgregarNota(Nota As Nota)
+
+        ' Consulta SQL para insertar un nuevo registro en la tabla de Notas con los datos de la nueva nota
+        Dim Insert As String = "Insert into Cursa (Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal) values (@Alumno, @Asignatura, @Nota1, @Nota2, @Nota3, @NotaFinal)"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando = New SQLiteCommand(Insert, Conexion)
+
+        ' Agregar los parámetros necesarios al comando
+        Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
+        Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
+        Comando.Parameters.AddWithValue("@Nota1", Nota.Nota1)
+        Comando.Parameters.AddWithValue("@Nota2", Nota.Nota2)
+        Comando.Parameters.AddWithValue("@Nota3", Nota.Nota3)
+        Comando.Parameters.AddWithValue("@NotaFinal", Nota.NotaFinal)
+
+        ' Ejecutar el comando para insertar la nueva nota en la base de datos
+        Comando.ExecuteNonQuery()
+
+    End Sub
+
+    ''' <summary>
+    ''' Modifica los datos de una nota existente en la base de datos.
+    ''' </summary>
+    ''' <param name="Nota">El objeto Notas con los datos actualizados de la nota.</param>
+    Public Sub ModificarNota(Nota As Nota)
+
+        ' Consulta SQL para actualizar los datos de la nota en la tabla de Notas
+        Dim Update As String = "update Cursa set Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3, NotaFinal = @NotaFinal where Alumno = @Alumno and Asignatura = @Asignatura"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando = New SQLiteCommand(Update, Conexion)
+
+        ' Agregar los parámetros necesarios al comando
+        Comando.Parameters.AddWithValue("@Nota1", Nota.Nota1)
+        Comando.Parameters.AddWithValue("@Nota2", Nota.Nota2)
+        Comando.Parameters.AddWithValue("@Nota3", Nota.Nota3)
+        Comando.Parameters.AddWithValue("@NotaFinal", Nota.NotaFinal)
+        Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
+        Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
+
+        ' Ejecutar el comando para actualizar los datos de la nota en la base de datos
+        Comando.ExecuteNonQuery()
+
+    End Sub
+
+    ''' <summary>
+    ''' Elimina una nota existente de la base de datos.
+    ''' </summary>
+    ''' <param name="Nota">El objeto Notas que representa la nota a eliminar.</param>
+    Public Sub EliminarNota(Nota As Nota)
+
+        ' Consulta SQL para eliminar la nota de la tabla de Notas
+        Dim Delete As String = "delete from Cursa where Alumno = @Alumno and Asignatura = @Asignatura"
+
+        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        Dim Comando = New SQLiteCommand(Delete, Conexion)
+
+        ' Agregar los parámetros necesarios al comando
+        Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
+        Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
+
+        ' Ejecutar el comando para eliminar la nota de la base de datos
         Comando.ExecuteNonQuery()
 
     End Sub
