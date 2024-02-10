@@ -133,10 +133,17 @@ Public Class Asignaturas
     ''' </summary>
     Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
 
+        Dim IdAsignatura As Integer
+
         ' Verifica si se ha ingresado un ID para buscar la asignatura
         If TextBoxBuscar.Text.Equals("") Then
 
             MsgBox("Introduce un ID para poder buscar la asignatura")
+
+            ' Verifica si el ID de la asignatura es un número válido
+        ElseIf Not Integer.TryParse(TextBoxBuscar.Text, IdAsignatura) Then
+
+            MessageBox.Show("Por favor, introduce una ID de asignatura válida.")
 
         Else
 
@@ -439,17 +446,17 @@ Public Class Asignaturas
 
             MessageBox.Show("Por favor, introduce una ID de profesor válida en el campo Profesor.")
 
-            Return
+        Else
 
-        End If
-
-        ' Crea un objeto de asignatura y lo agrega a la base de datos
-        Dim Asignatura As Asignatura = New Asignatura With {
+            ' Crea un objeto de asignatura y lo agrega a la base de datos
+            Dim Asignatura As Asignatura = New Asignatura With {
             .Nombre = TextBoxNombre.Text,
             .Aula = TextBoxAula.Text,
             .Profesor = TextBoxProfesor.Text}
 
-        BaseDeDatos.AgregarAsignatura(Asignatura)
+            BaseDeDatos.AgregarAsignatura(Asignatura)
+
+        End If
 
     End Sub
 
@@ -485,18 +492,18 @@ Public Class Asignaturas
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
 
-            Return
+        Else
 
-        End If
-
-        ' Crea un objeto de asignatura con los detalles modificados y actualiza la base de datos
-        Dim Asignatura As Asignatura = New Asignatura With {
+            ' Crea un objeto de asignatura con los detalles modificados y actualiza la base de datos
+            Dim Asignatura As Asignatura = New Asignatura With {
             .Id = TextBoxId.Text,
             .Nombre = TextBoxNombre.Text,
             .Aula = TextBoxAula.Text,
             .Profesor = TextBoxProfesor.Text}
 
-        BaseDeDatos.ModificarAsignatura(Asignatura)
+            BaseDeDatos.ModificarAsignatura(Asignatura)
+
+        End If
 
     End Sub
 

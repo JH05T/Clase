@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Clase.BaseDeDatos
 
 ''' <summary>
 ''' Clase que representa el formulario de gestión de Alumnos.
@@ -155,10 +156,18 @@ Public Class Alumnos
     ''' </summary>
     Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
 
+        Dim IdAlumno As Integer
+
         If TextBoxBuscar.Text.Equals("") Then
 
             ' Muestra un mensaje si el campo de búsqueda está vacío
             MsgBox("Introduce un ID para poder buscar al alumno")
+
+
+            ' Verifica si el ID del alumno es un número válido
+        ElseIf Not Integer.TryParse(TextBoxBuscar.Text, IdAlumno) Then
+
+            MessageBox.Show("Por favor, introduce una ID de alumno válida.")
 
         Else
 
@@ -462,36 +471,22 @@ Public Class Alumnos
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
 
-            Return
-
-        End If
-
-        If Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+        ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
 
-            Return
-
-        End If
-
-        If Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+        ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
 
-            Return
-
-        End If
-
-        If Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+        ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
 
             MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
 
-            Return
+        Else
 
-        End If
-
-        ' Crea un nuevo objeto Alumno con los datos ingresados por el usuario
-        Dim Alumno As Alumno = New Alumno With {
+            ' Crea un nuevo objeto Alumno con los datos ingresados por el usuario
+            Dim Alumno As Alumno = New Alumno With {
             .Nombre = TextBoxNombre.Text,
             .Apellidos = TextBoxApellidos.Text,
             .Direccion = TextBoxDireccion.Text,
@@ -501,8 +496,10 @@ Public Class Alumnos
             .FechaNacimiento = New DateOnly(Year, Mes, Dia),
             .Nacionalidad = TextBoxNacionalidad.Text}
 
-        ' Agrega el nuevo alumno a la base de datos
-        BaseDeDatos.AgregarAlumno(Alumno)
+            ' Agrega el nuevo alumno a la base de datos
+            BaseDeDatos.AgregarAlumno(Alumno)
+
+        End If
 
     End Sub
 
@@ -539,36 +536,22 @@ Public Class Alumnos
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
 
-            Return
-
-        End If
-
-        If Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+        ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
 
-            Return
-
-        End If
-
-        If Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+        ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
 
             MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
 
-            Return
-
-        End If
-
-        If Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+        ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
 
             MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
 
-            Return
+        Else
 
-        End If
-
-        ' Crea un objeto Alumno con los datos ingresados por el usuario, incluyendo el ID del alumno a modificar
-        Dim Alumno As Alumno = New Alumno With {
+            ' Crea un objeto Alumno con los datos ingresados por el usuario, incluyendo el ID del alumno a modificar
+            Dim Alumno As Alumno = New Alumno With {
             .Id = TextBoxId.Text,
             .Nombre = TextBoxNombre.Text,
             .Apellidos = TextBoxApellidos.Text,
@@ -579,8 +562,10 @@ Public Class Alumnos
             .FechaNacimiento = New DateOnly(Year, Mes, Dia),
             .Nacionalidad = TextBoxNacionalidad.Text}
 
-        ' Llama a la función correspondiente en la base de datos para modificar los datos del alumno
-        BaseDeDatos.ModificarAlumno(Alumno)
+            ' Llama a la función correspondiente en la base de datos para modificar los datos del alumno
+            BaseDeDatos.ModificarAlumno(Alumno)
+
+        End If
 
     End Sub
 

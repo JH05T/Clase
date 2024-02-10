@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports Clase.BaseDeDatos
 
 ''' <summary>
 ''' Clase que representa el formulario de gestión de profesores.
@@ -129,10 +130,18 @@ Public Class Profesores
     ''' </summary>
     Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
 
+        Dim IdProfesor As Integer
+
         If TextBoxBuscar.Text.Equals("") Then
 
             ' Muestra un mensaje si el campo de búsqueda está vacío
             MsgBox("Introduce un ID para poder buscar al profesor")
+
+
+            ' Verifica si el ID del profesor es un número válido
+        ElseIf Not Integer.TryParse(TextBoxBuscar.Text, IdProfesor) Then
+
+            MessageBox.Show("Por favor, introduce una ID de profesor válida.")
 
         Else
 

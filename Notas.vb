@@ -127,34 +127,39 @@ Public Class Notas
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Buscar. Busca una nota por ID de alumno y muestra sus detalles.
+    ''' Maneja el evento Click del botón Buscar. Busca una nota por ID de alumno y asignatura y muestra sus detalles.
     ''' </summary>
     Private Sub ButtonBuscar_Click(sender As Object, e As EventArgs) Handles ButtonBuscar.Click
 
-        If TextBoxBuscarAlumno.Text.Equals("") Or TextBoxBuscarAsignatura.Equals("") Then
+        Dim idAlumno As Integer
+        Dim idAsignatura As Integer
+        Dim idAlumnoValido As Boolean = Integer.TryParse(TextBoxBuscarAlumno.Text, idAlumno)
+        Dim idAsignaturaValido As Boolean = Integer.TryParse(TextBoxBuscarAsignatura.Text, idAsignatura)
 
-            ' Muestra un mensaje si el campo de búsqueda está vacío
-            MsgBox("Introduce un ID para poder buscar la nota del alumno")
+        If idAlumnoValido And idAsignaturaValido Then
+
+            ' Busca la nota por ID de alumno y asignatura en la base de datos y muestra sus detalles si se encuentra
+            Dim Nota = BaseDeDatos.LeerDatosNotaBuscada(New Nota With {.Alumno = idAlumno, .Asignatura = idAsignatura})
+
+            MostrarNota(Nota)
+
+        ElseIf idAlumnoValido Then
+
+            ' Busca las notas por ID de alumno en la base de datos y muestra sus detalles si se encuentran
+            Dim Notas = BaseDeDatos.LeerDatosNotasAlumno(idAlumno)
+
+            MostrarNotas(Notas)
+
+        ElseIf idAsignaturaValido Then
+
+            ' Busca las notas por ID de asignatura en la base de datos y muestra sus detalles si se encuentran
+            Dim Notas = BaseDeDatos.LeerDatosNotasAsignatura(idAsignatura)
+
+            MostrarNotas(Notas)
 
         Else
 
-            ' Busca la nota por ID de alumno en la base de datos y muestra sus detalles si se encuentra
-            Dim Nota = BaseDeDatos.LeerDatosNotaBuscada(New Nota With {.Alumno = TextBoxBuscarAlumno.Text, .Asignatura = TextBoxAsignatura.Text})
-
-            If Nota.Alumno.Equals(0) Then
-
-                vaciarGroupBoxDatos()
-
-            Else
-
-                TextBoxAlumno.Text = Nota.Alumno
-                TextBoxAsignatura.Text = Nota.Asignatura
-                TextBoxNota1.Text = Nota.Nota1
-                TextBoxNota2.Text = Nota.Nota2
-                TextBoxNota3.Text = Nota.Nota3
-                TextBoxNotaFinal.Text = Nota.NotaFinal
-
-            End If
+            MsgBox("Introduce al menos un ID válido para poder buscar la nota del alumno")
 
         End If
 
@@ -422,6 +427,30 @@ Public Class Notas
         Next
 
     End Sub
+    Private Sub MostrarNota(Nota As Nota)
+
+        If Nota.Alumno.Equals(0) Then
+
+            vaciarGroupBoxDatos()
+
+        Else
+
+            TextBoxAlumno.Text = Nota.Alumno
+            TextBoxAsignatura.Text = Nota.Asignatura
+            TextBoxNota1.Text = Nota.Nota1
+            TextBoxNota2.Text = Nota.Nota2
+            TextBoxNota3.Text = Nota.Nota3
+            TextBoxNotaFinal.Text = Nota.NotaFinal
+
+        End If
+
+    End Sub
+
+    Private Sub MostrarNotas(Notas As DataSet)
+
+        CargarListView(Notas)
+
+    End Sub
 
     ''' <summary>
     ''' Agrega una nueva nota a la base de datos.
@@ -434,7 +463,7 @@ Public Class Notas
         .Nota1 = TextBoxNota1.Text,
         .Nota2 = TextBoxNota2.Text,
         .Nota3 = TextBoxNota3.Text,
-        .NotaFinal = TextBoxNotaFinal.Text}
+        .NotaFinal = (.Nota1 + .Nota2 + .Nota3) / 3}
 
         BaseDeDatos.AgregarNota(Nota)
 
@@ -469,7 +498,7 @@ Public Class Notas
         .Nota1 = TextBoxNota1.Text,
         .Nota2 = TextBoxNota2.Text,
         .Nota3 = TextBoxNota3.Text,
-        .NotaFinal = TextBoxNotaFinal.Text}
+        .NotaFinal = (.Nota1 + .Nota2 + .Nota3) / 3}
 
         BaseDeDatos.ModificarNota(Nota)
 

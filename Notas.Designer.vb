@@ -258,6 +258,7 @@ Partial Class Notas
         TextBoxNotaFinal.Font = New Font("Segoe Print", 9F, FontStyle.Regular, GraphicsUnit.Point)
         TextBoxNotaFinal.Location = New Point(350, 300)
         TextBoxNotaFinal.Name = "TextBoxNotaFinal"
+        TextBoxNotaFinal.ReadOnly = True
         TextBoxNotaFinal.Size = New Size(125, 29)
         TextBoxNotaFinal.TabIndex = 5
         ' 
