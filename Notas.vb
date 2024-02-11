@@ -159,7 +159,7 @@ Public Class Notas
 
         Else
 
-            MsgBox("Introduce al menos un ID válido para poder buscar la nota del alumno")
+            CargarListView(BaseDeDatos.LeerDatosNotas)
 
         End If
 
@@ -225,6 +225,10 @@ Public Class Notas
 
         PictureBox.Show()
 
+        LabelNotaFinal.Hide()
+
+        TextBoxNotaFinal.Hide()
+
         GroupBoxBuscar.Hide()
 
     End Sub
@@ -246,6 +250,10 @@ Public Class Notas
 
         ButtonCancelar.Show()
 
+        LabelNotaFinal.Show()
+
+        TextBoxNotaFinal.Show()
+
         PictureBox.Hide()
 
         GroupBoxBuscar.Show()
@@ -265,11 +273,15 @@ Public Class Notas
 
         opcion = "Modificar"
 
+        PictureBox.Hide()
+
+        LabelNotaFinal.Hide()
+
+        TextBoxNotaFinal.Hide()
+
         ButtonAceptar.Show()
 
         ButtonCancelar.Show()
-
-        PictureBox.Hide()
 
         GroupBoxBuscar.Show()
 
@@ -293,6 +305,10 @@ Public Class Notas
         ButtonCancelar.Hide()
 
         PictureBox.Hide()
+
+        LabelNotaFinal.Show()
+
+        TextBoxNotaFinal.Show()
 
         GroupBoxBuscar.Show()
 
@@ -346,18 +362,20 @@ Public Class Notas
         ListView.View = View.Details
 
         ' Itera sobre los datos de las notas y los agrega al ListView
+        ' Itera sobre los datos de las notas y los agrega al ListView
         For pos As Integer = 0 To DatosNotas.Tables(0).Rows.Count - 1
 
             ElementoList = ListView.Items.Add(DatosNotas.Tables(0).Rows(pos).Item(0))
 
             ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(0))
             ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(1))
-            ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(2))
-            ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(3))
-            ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(4))
-            ElementoList.SubItems.Add(DatosNotas.Tables(0).Rows(pos).Item(5))
+            ElementoList.SubItems.Add(Math.Round(DatosNotas.Tables(0).Rows(pos).Item(2), 2))
+            ElementoList.SubItems.Add(Math.Round(DatosNotas.Tables(0).Rows(pos).Item(3), 2))
+            ElementoList.SubItems.Add(Math.Round(DatosNotas.Tables(0).Rows(pos).Item(4), 2))
+            ElementoList.SubItems.Add(Math.Round(DatosNotas.Tables(0).Rows(pos).Item(5), 2))
 
         Next
+
 
     End Sub
 
@@ -457,17 +475,39 @@ Public Class Notas
     ''' </summary>
     Private Sub AgregarNota()
 
-        Dim Nota As Nota = New Nota With {
-        .Alumno = TextBoxAlumno.Text,
-        .Asignatura = TextBoxAsignatura.Text,
-        .Nota1 = TextBoxNota1.Text,
-        .Nota2 = TextBoxNota2.Text,
-        .Nota3 = TextBoxNota3.Text,
-        .NotaFinal = (.Nota1 + .Nota2 + .Nota3) / 3}
+        Dim Nota As Nota = New Nota
+        Dim Alumno, Asignatura As Integer
+        Dim Nota1, Nota2, Nota3 As Single
 
-        BaseDeDatos.AgregarNota(Nota)
+        ' Reemplaza las comas por puntos en las cadenas de texto
+        Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
+        Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
+        Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
+
+        ' Convierte los valores de texto a números
+        If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
+
+            ' Asigna los valores a la estructura Nota
+            Nota.Alumno = Alumno
+            Nota.Asignatura = Asignatura
+            Nota.Nota1 = Nota1
+            Nota.Nota2 = Nota2
+            Nota.Nota3 = Nota3
+
+            ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
+            Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
+
+            ' Agrega la nota a la base de datos
+            BaseDeDatos.AgregarNota(Nota)
+
+        Else
+
+            MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+
+        End If
 
     End Sub
+
 
     ''' <summary>
     ''' Elimina una nota de la base de datos.
@@ -479,7 +519,8 @@ Public Class Notas
         If result = DialogResult.Yes Then
 
             Dim Nota As Nota = New Nota With {
-        .Alumno = TextBoxAlumno.Text}
+            .Alumno = TextBoxAlumno.Text,
+            .Asignatura = TextBoxAsignatura.Text}
 
             BaseDeDatos.EliminarNota(Nota)
 
@@ -492,15 +533,36 @@ Public Class Notas
     ''' </summary>
     Private Sub ModificarNota()
 
-        Dim Nota As Nota = New Nota With {
-        .Alumno = TextBoxAlumno.Text,
-        .Asignatura = TextBoxAsignatura.Text,
-        .Nota1 = TextBoxNota1.Text,
-        .Nota2 = TextBoxNota2.Text,
-        .Nota3 = TextBoxNota3.Text,
-        .NotaFinal = (.Nota1 + .Nota2 + .Nota3) / 3}
+        Dim Nota As Nota = New Nota
+        Dim Alumno, Asignatura As Integer
+        Dim Nota1, Nota2, Nota3 As Single
 
-        BaseDeDatos.ModificarNota(Nota)
+        ' Reemplaza las comas por puntos en las cadenas de texto
+        Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
+        Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
+        Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
+
+        ' Convierte los valores de texto a números
+        If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
+
+            ' Asigna los valores a la estructura Nota
+            Nota.Alumno = Alumno
+            Nota.Asignatura = Asignatura
+            Nota.Nota1 = Nota1
+            Nota.Nota2 = Nota2
+            Nota.Nota3 = Nota3
+
+            ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
+            Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
+
+            ' Agrega la nota a la base de datos
+            BaseDeDatos.ModificarNota(Nota)
+
+        Else
+
+            MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+
+        End If
 
     End Sub
 

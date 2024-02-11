@@ -229,6 +229,10 @@ Public Class Asignaturas
 
         PictureBox.Show()
 
+        LabelId.Hide()
+
+        TextBoxId.Hide()
+
         GroupBoxBuscar.Hide()
 
     End Sub
@@ -254,6 +258,10 @@ Public Class Asignaturas
 
         GroupBoxBuscar.Show()
 
+        LabelId.Show()
+
+        TextBoxId.Show()
+
     End Sub
 
     ''' <summary>
@@ -274,6 +282,10 @@ Public Class Asignaturas
         ButtonCancelar.Show()
 
         PictureBox.Hide()
+
+        LabelId.Hide()
+
+        TextBoxId.Hide()
 
         GroupBoxBuscar.Show()
 
@@ -299,6 +311,10 @@ Public Class Asignaturas
         PictureBox.Hide()
 
         GroupBoxBuscar.Show()
+
+        LabelId.Show()
+
+        TextBoxId.Show()
 
     End Sub
 

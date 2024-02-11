@@ -262,6 +262,10 @@ Public Class Alumnos
 
         ButtonCancelar.Show()
 
+        LabelId.Hide()
+
+        TextBoxId.Hide()
+
     End Sub
 
     ''' <summary>
@@ -283,6 +287,10 @@ Public Class Alumnos
 
         ButtonCancelar.Show()
 
+        LabelId.Show()
+
+        TextBoxId.Show()
+
     End Sub
 
     ''' <summary>
@@ -303,6 +311,10 @@ Public Class Alumnos
 
         ButtonCancelar.Show()
 
+        LabelId.Hide()
+
+        TextBoxId.Hide()
+
     End Sub
 
     ''' <summary>
@@ -322,6 +334,10 @@ Public Class Alumnos
         ButtonAceptar.Hide()
 
         ButtonCancelar.Hide()
+
+        LabelId.Show()
+
+        TextBoxId.Show()
 
     End Sub
 

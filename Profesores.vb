@@ -225,6 +225,10 @@ Public Class Profesores
 
         PictureBox.Show()
 
+        LabelId.Hide()
+
+        TextBoxId.Hide()
+
         GroupBoxBuscar.Hide()
 
     End Sub
@@ -250,6 +254,10 @@ Public Class Profesores
 
         GroupBoxBuscar.Show()
 
+        LabelId.Show()
+
+        TextBoxId.Show()
+
     End Sub
 
     ''' <summary>
@@ -268,6 +276,10 @@ Public Class Profesores
         ButtonAceptar.Show()
 
         ButtonCancelar.Show()
+
+        LabelId.Hide()
+
+        TextBoxId.Hide()
 
         PictureBox.Hide()
 
@@ -295,6 +307,10 @@ Public Class Profesores
         PictureBox.Hide()
 
         GroupBoxBuscar.Show()
+
+        LabelId.Show()
+
+        TextBoxId.Show()
 
     End Sub
 
