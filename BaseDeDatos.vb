@@ -577,10 +577,10 @@ Module BaseDeDatos
 
             NotaBuscada.Alumno = Lector.GetInt32(0)
             NotaBuscada.Asignatura = Lector.GetInt32(1)
-            NotaBuscada.Nota1 = Lector.GetFloat(2)
-            NotaBuscada.Nota2 = Lector.GetFloat(3)
-            NotaBuscada.Nota3 = Lector.GetFloat(4)
-            NotaBuscada.NotaFinal = Lector.GetFloat(5)
+            NotaBuscada.Nota1 = Math.Round(Lector.GetFloat(2), 2)
+            NotaBuscada.Nota2 = Math.Round(Lector.GetFloat(3), 2)
+            NotaBuscada.Nota3 = Math.Round(Lector.GetFloat(4), 2)
+            NotaBuscada.NotaFinal = Math.Round(Lector.GetFloat(5), 2)
 
         End If
 
