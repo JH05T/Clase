@@ -400,7 +400,12 @@ Public Class Alumnos
 
             For i As Integer = 0 To DatosAlumnos.Tables(0).Columns.Count - 1
 
-                ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(i).ToString())
+                If DatosAlumnos.Tables(0).Columns(i).DataType Is GetType(Date) Then
+                    ' Si el elemento es de tipo Date, solo muestra la fecha
+                    ElementoList.SubItems.Add(CType(DatosAlumnos.Tables(0).Rows(pos).Item(i), Date).ToShortDateString())
+                Else
+                    ElementoList.SubItems.Add(DatosAlumnos.Tables(0).Rows(pos).Item(i).ToString())
+                End If
 
             Next
 
