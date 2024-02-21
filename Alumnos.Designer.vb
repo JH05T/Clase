@@ -22,6 +22,7 @@ Partial Class Alumnos
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Alumnos))
         MenuStrip = New MenuStrip()
         AgregarToolStripMenuItem = New ToolStripMenuItem()
@@ -64,6 +65,9 @@ Partial Class Alumnos
         ButtonPrimero = New Button()
         ButtonAceptar = New Button()
         ButtonCancelar = New Button()
+        ToolTipBuscar = New ToolTip(components)
+        ButtonAyuda = New Button()
+        ToolTipAyuda = New ToolTip(components)
         MenuStrip.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         GroupBoxBuscar.SuspendLayout()
@@ -468,12 +472,24 @@ Partial Class Alumnos
         ButtonCancelar.Text = "Cancelar"
         ButtonCancelar.UseVisualStyleBackColor = True
         ' 
+        ' ButtonAyuda
+        ' 
+        ButtonAyuda.BackgroundImage = CType(resources.GetObject("ButtonAyuda.BackgroundImage"), Image)
+        ButtonAyuda.BackgroundImageLayout = ImageLayout.Zoom
+        ButtonAyuda.FlatStyle = FlatStyle.Flat
+        ButtonAyuda.Location = New Point(1209, 0)
+        ButtonAyuda.Name = "ButtonAyuda"
+        ButtonAyuda.Size = New Size(25, 25)
+        ButtonAyuda.TabIndex = 5
+        ButtonAyuda.UseVisualStyleBackColor = True
+        ' 
         ' Alumnos
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         ClientSize = New Size(1234, 711)
+        Controls.Add(ButtonAyuda)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
         Controls.Add(ButtonAceptar)
@@ -535,4 +551,7 @@ Partial Class Alumnos
     Friend WithEvents VolverToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TextBoxDiaFechaNacimiento As TextBox
     Friend WithEvents TextBoxMesFechaNacimiento As TextBox
+    Friend WithEvents ToolTipBuscar As ToolTip
+    Friend WithEvents ButtonAyuda As Button
+    Friend WithEvents ToolTipAyuda As ToolTip
 End Class

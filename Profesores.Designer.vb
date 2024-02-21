@@ -22,6 +22,7 @@ Partial Class Profesores
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As ComponentModel.ComponentResourceManager = New ComponentModel.ComponentResourceManager(GetType(Profesores))
         AgregarToolStripMenuItem = New ToolStripMenuItem()
         EliminarToolStripMenuItem = New ToolStripMenuItem()
@@ -50,6 +51,9 @@ Partial Class Profesores
         LabelBuscar = New Label()
         GroupBoxBuscar = New GroupBox()
         PictureBox = New PictureBox()
+        ToolTipBuscar = New ToolTip(components)
+        ButtonAyuda = New Button()
+        ToolTipAyuda = New ToolTip(components)
         MenuStrip.SuspendLayout()
         GroupBoxRellenarDatos.SuspendLayout()
         GroupBoxBuscar.SuspendLayout()
@@ -314,12 +318,24 @@ Partial Class Profesores
         PictureBox.TabIndex = 18
         PictureBox.TabStop = False
         ' 
+        ' ButtonAyuda
+        ' 
+        ButtonAyuda.BackgroundImage = CType(resources.GetObject("ButtonAyuda.BackgroundImage"), Image)
+        ButtonAyuda.BackgroundImageLayout = ImageLayout.Zoom
+        ButtonAyuda.FlatStyle = FlatStyle.Flat
+        ButtonAyuda.Location = New Point(1209, 0)
+        ButtonAyuda.Name = "ButtonAyuda"
+        ButtonAyuda.Size = New Size(25, 25)
+        ButtonAyuda.TabIndex = 19
+        ButtonAyuda.UseVisualStyleBackColor = True
+        ' 
         ' Profesores
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
         ClientSize = New Size(1234, 711)
+        Controls.Add(ButtonAyuda)
         Controls.Add(PictureBox)
         Controls.Add(GroupBoxBuscar)
         Controls.Add(ListView)
@@ -384,4 +400,7 @@ Partial Class Profesores
     Friend WithEvents LabelDepartamento As Label
     Friend WithEvents TextBoxDepartamento As TextBox
     Friend WithEvents PictureBox As PictureBox
+    Friend WithEvents ToolTipBuscar As ToolTip
+    Friend WithEvents ButtonAyuda As Button
+    Friend WithEvents ToolTipAyuda As ToolTip
 End Class

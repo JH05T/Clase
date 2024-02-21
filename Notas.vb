@@ -166,6 +166,16 @@ Public Class Notas
     End Sub
 
     ''' <summary>
+    ''' Muestra un texto cuando el ratón se coloca sobre el botón de buscar.
+    ''' </summary>
+    Private Sub ButtonBuscar_MouseHover(sender As Object, e As EventArgs) Handles ButtonBuscar.MouseHover
+
+        ' Establece el texto "buscar" que se mostrará cuando el ratón se coloca sobre el botón de buscar
+        ToolTipBuscar.SetToolTip(ButtonBuscar, "Buscar")
+
+    End Sub
+
+    ''' <summary>
     ''' Maneja el evento Click del botón Aceptar. Realiza la acción correspondiente (Agregar, Eliminar, Modificar o Visualizar) según la opción seleccionada.
     ''' </summary>
     Private Sub ButtonAceptar_Click(sender As Object, e As EventArgs) Handles ButtonAceptar.Click
@@ -326,6 +336,29 @@ Public Class Notas
     End Sub
 
     ''' <summary>
+    ''' Este método se ejecuta cuando se hace clic en el botón ButtonAyuda.
+    ''' </summary>
+    Private Sub ButtonAyuda_Click(sender As Object, e As EventArgs) Handles ButtonAyuda.Click
+
+        ' Define una variable "ruta" que contiene la ruta del archivo "DocNotas.pdf" en el directorio de inicio de la aplicación.
+        Dim ruta As String = Application.StartupPath.Substring(0, Application.StartupPath.Length - 25) + "Doc\DocNotas.pdf"
+
+        ' Abre una ventana de línea de comandos y ejecuta el comando "start" para abrir el archivo especificado en la ruta.
+        Process.Start("cmd", "/C start file:///" & ruta)
+
+    End Sub
+
+    ''' <summary>
+    ''' Muestra un texto cuando el ratón se coloca sobre el botón de ayuda.
+    ''' </summary>
+    Private Sub ButtonAyuda_MouseHover(sender As Object, e As EventArgs) Handles ButtonAyuda.MouseHover
+
+        ' Establece el texto "ayuda" que se mostrará cuando el ratón se coloca sobre el botón de ayuda
+        ToolTipBuscar.SetToolTip(ButtonAyuda, "Ayuda")
+
+    End Sub
+
+    ''' <summary>
     ''' Maneja el evento Closing del formulario. Cierra el formulario de inicio al cerrar este formulario.
     ''' </summary>
     Private Sub Notas_Closing(sender As Object, e As CancelEventArgs) Handles MyBase.Closing
@@ -375,7 +408,6 @@ Public Class Notas
             ElementoList.SubItems.Add(Math.Round(DatosNotas.Tables(0).Rows(pos).Item(5), 2))
 
         Next
-
 
     End Sub
 
