@@ -19,10 +19,12 @@ Public Class Notas
     ''' Maneja el evento Load del formulario. Configura la interfaz inicial y carga los datos de notas.
     ''' </summary>
     Private Sub Notas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         ' Configuración inicial del formulario
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.MaximizeBox = False
+        Me.DoubleBuffered = True
 
         ' Realiza un clic en el menú Visualizar
         VisualizarToolStripMenuItem.PerformClick()

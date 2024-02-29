@@ -487,7 +487,7 @@ Partial Class Alumnos
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
+        BackColor = Color.WhiteSmoke
         ClientSize = New Size(1234, 711)
         Controls.Add(ButtonAyuda)
         Controls.Add(GroupBoxBuscar)

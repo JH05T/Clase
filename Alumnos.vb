@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports Clase.BaseDeDatos
 
 ''' <summary>
 ''' Clase que representa el formulario de gestión de Alumnos.
@@ -25,6 +24,7 @@ Public Class Alumnos
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.MaximizeBox = False
+        Me.DoubleBuffered = True
 
         ' Simula el clic en la opción Visualizar en el menú contextual
         VisualizarToolStripMenuItem.PerformClick()

@@ -17,6 +17,7 @@ Public Class Inicio
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.MaximizeBox = False
+        Me.DoubleBuffered = True
 
         ' Se llama al método para configurar los colores de los controles en el formulario.
         ConfigurarColores()

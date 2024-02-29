@@ -1,5 +1,4 @@
 ﻿Imports System.ComponentModel
-Imports Clase.BaseDeDatos
 
 ''' <summary>
 ''' Clase que representa el formulario de gestión de profesores.
@@ -20,10 +19,12 @@ Public Class Profesores
     ''' Maneja el evento Load del formulario. Configura la interfaz inicial y carga los datos de profesores.
     ''' </summary>
     Private Sub Profesores_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         ' Configuración inicial del formulario
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.MaximizeBox = False
+        Me.DoubleBuffered = True
 
         ' Realiza un clic en el menú Visualizar
         VisualizarToolStripMenuItem.PerformClick()

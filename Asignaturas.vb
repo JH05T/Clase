@@ -24,6 +24,7 @@ Public Class Asignaturas
         Me.FormBorderStyle = FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.MaximizeBox = False
+        Me.DoubleBuffered = True
 
         ' Ejecuta automáticamente la opción Visualizar
         VisualizarToolStripMenuItem.PerformClick()
