@@ -91,13 +91,18 @@ Public Class Alumnos
         ' Verifica si hay más elementos en el ListView
         If indiceListView < ListView.Items.Count - 1 Then
 
-            ' Deselecciona el elemento actual
-            ListView.Items(indiceListView).Selected = False
+            ' Deselecciona el elemento actual si existe
+            If indiceListView < ListView.Items.Count Then
+                ListView.Items(indiceListView).Selected = False
+            End If
 
             ' Incrementa el índice y selecciona el siguiente elemento
             indiceListView += 1
 
-            ListView.Items(indiceListView).Selected = True
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView < ListView.Items.Count AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+                ListView.Items(indiceListView).Selected = True
+            End If
 
         End If
 
@@ -111,13 +116,18 @@ Public Class Alumnos
         ' Verifica si hay elementos anteriores en el ListView
         If indiceListView > 0 Then
 
-            ' Deselecciona el elemento actual
-            ListView.Items(indiceListView).Selected = False
+            ' Deselecciona el elemento actual si existe
+            If indiceListView < ListView.Items.Count Then
+                ListView.Items(indiceListView).Selected = False
+            End If
 
             ' Decrementa el índice y selecciona el elemento anterior
             indiceListView -= 1
 
-            ListView.Items(indiceListView).Selected = True
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView >= 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+                ListView.Items(indiceListView).Selected = True
+            End If
 
         End If
 
@@ -128,12 +138,17 @@ Public Class Alumnos
     ''' </summary>
     Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
 
-        ' Deselecciona el elemento actual y selecciona el primero
-        ListView.Items(indiceListView).Selected = False
+        ' Deselecciona el elemento actual si existe y selecciona el primero
+        If indiceListView < ListView.Items.Count Then
+            ListView.Items(indiceListView).Selected = False
+        End If
 
         indiceListView = 0
 
-        ListView.Items(indiceListView).Selected = True
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+            ListView.Items(indiceListView).Selected = True
+        End If
 
     End Sub
 
@@ -142,12 +157,17 @@ Public Class Alumnos
     ''' </summary>
     Private Sub ButtonUltimo_Click(sender As Object, e As EventArgs) Handles ButtonUltimo.Click
 
-        ' Deselecciona el elemento actual y selecciona el último
-        ListView.Items(indiceListView).Selected = False
+        ' Deselecciona el elemento actual si existe y selecciona el último
+        If indiceListView < ListView.Items.Count Then
+            ListView.Items(indiceListView).Selected = False
+        End If
 
         indiceListView = ListView.Items.Count - 1
 
-        ListView.Items(indiceListView).Selected = True
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+            ListView.Items(indiceListView).Selected = True
+        End If
 
     End Sub
 
@@ -517,27 +537,37 @@ Public Class Alumnos
     ''' </summary>
     Private Sub AgregarAlumno()
 
-        ' Valida los datos de entrada para asegurar que son números válidos y tienen el formato correcto
-        Dim Dia, Mes, Year As Integer
-        Dim Movil As Long
+        Try
 
-        If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
+            ' Valida los datos de entrada para asegurar que son números válidos y tienen el formato correcto
+            Dim Dia, Mes, Year As Integer
+            Dim Movil As Long
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
+            If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
 
-        ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+                MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
+                Return
 
-        ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+            ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+                MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
 
-        ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+                Return
 
-            MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+            ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
 
-        Else
+                MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+
+                Return
+
+            ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+
+                MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+
+                Return
+
+            End If
 
             ' Crea un nuevo objeto Alumno con los datos ingresados por el usuario
             Dim Alumno As Alumno = New Alumno With {
@@ -553,7 +583,11 @@ Public Class Alumnos
             ' Agrega el nuevo alumno a la base de datos
             BaseDeDatos.AgregarAlumno(Alumno)
 
-        End If
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al agregar el alumno, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -562,18 +596,26 @@ Public Class Alumnos
     ''' </summary>
     Private Sub EliminarAlumno()
 
-        ' Muestra un mensaje de confirmación antes de eliminar al alumno seleccionado
-        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar este alumno?", "Confirmación", MessageBoxButtons.YesNo)
+        Try
 
-        If result = DialogResult.Yes Then
+            ' Muestra un mensaje de confirmación antes de eliminar al alumno seleccionado
+            Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar este alumno?", "Confirmación", MessageBoxButtons.YesNo)
 
-            ' Crea un objeto Alumno con el ID del alumno a eliminar y llama a la función correspondiente en la base de datos
-            Dim Alumno As Alumno = New Alumno With {
-                .Id = TextBoxId.Text}
+            If result = DialogResult.Yes Then
 
-            BaseDeDatos.EliminarAlumno(Alumno)
+                ' Crea un objeto Alumno con el ID del alumno a eliminar y llama a la función correspondiente en la base de datos
+                Dim Alumno As Alumno = New Alumno With {
+                    .Id = TextBoxId.Text}
 
-        End If
+                BaseDeDatos.EliminarAlumno(Alumno)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al eliminar el alumno, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -582,27 +624,37 @@ Public Class Alumnos
     ''' </summary>
     Private Sub ModificarAlumno()
 
-        ' Valida los datos de entrada para asegurar que son números válidos y tienen el formato correcto
-        Dim Dia, Mes, Year As Integer
-        Dim Movil As Long
+        Try
 
-        If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
+            ' Valida los datos de entrada para asegurar que son números válidos y tienen el formato correcto
+            Dim Dia, Mes, Year As Integer
+            Dim Movil As Long
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
+            If Not Integer.TryParse(TextBoxDiaFechaNacimiento.Text, Dia) Then
 
-        ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
+                MessageBox.Show("Por favor, introduce un número válido en el campo Día.")
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
+                Return
 
-        ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
+            ElseIf Not Integer.TryParse(TextBoxMesFechaNacimiento.Text, Mes) Then
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+                MessageBox.Show("Por favor, introduce un número válido en el campo Mes.")
 
-        ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+                Return
 
-            MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+            ElseIf Not Integer.TryParse(TextBoxFechaNacimiento.Text, Year) Then
 
-        Else
+                MessageBox.Show("Por favor, introduce un número válido en el campo Año.")
+
+                Return
+
+            ElseIf Not Long.TryParse(TextBoxMovil.Text, Movil) OrElse TextBoxMovil.Text.Length <> 9 Then
+
+                MessageBox.Show("Por favor, introduce un número de teléfono móvil válido de 9 dígitos.")
+
+                Return
+
+            End If
 
             ' Crea un objeto Alumno con los datos ingresados por el usuario, incluyendo el ID del alumno a modificar
             Dim Alumno As Alumno = New Alumno With {
@@ -619,7 +671,11 @@ Public Class Alumnos
             ' Llama a la función correspondiente en la base de datos para modificar los datos del alumno
             BaseDeDatos.ModificarAlumno(Alumno)
 
-        End If
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al modificar el alumno, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 

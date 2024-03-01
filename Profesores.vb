@@ -63,34 +63,79 @@ Public Class Profesores
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Siguiente. Selecciona el siguiente elemento en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Siguiente.
     ''' </summary>
     Private Sub ButtonSiguiente_Click(sender As Object, e As EventArgs) Handles ButtonSiguiente.Click
 
+        ' Verifica si hay más elementos en el ListView
         If indiceListView < ListView.Items.Count - 1 Then
 
-            ' Selecciona el siguiente elemento en el ListView
-            ListView.Items(indiceListView).Selected = False
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
 
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Incrementa el índice y selecciona el siguiente elemento
             indiceListView += 1
 
-            ListView.Items(indiceListView).Selected = True
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView < ListView.Items.Count AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
 
         End If
 
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Anterior. Selecciona el elemento anterior en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Anterior.
     ''' </summary>
     Private Sub ButtonAnterior_Click(sender As Object, e As EventArgs) Handles ButtonAnterior.Click
 
+        ' Verifica si hay elementos anteriores en el ListView
         If indiceListView > 0 Then
 
-            ' Selecciona el elemento anterior en el ListView
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Decrementa el índice y selecciona el elemento anterior
+            indiceListView -= 1
+
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView >= 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Evento que se dispara cuando se hace clic en el botón Primero.
+    ''' </summary>
+    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
+
+        ' Deselecciona el elemento actual si existe y selecciona el primero
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
             ListView.Items(indiceListView).Selected = False
 
-            indiceListView -= 1
+        End If
+
+        indiceListView = 0
+
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
 
             ListView.Items(indiceListView).Selected = True
 
@@ -99,30 +144,25 @@ Public Class Profesores
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Primero. Selecciona el primer elemento en el ListView.
-    ''' </summary>
-    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
-
-        ' Selecciona el primer elemento en el ListView
-        ListView.Items(indiceListView).Selected = False
-
-        indiceListView = 0
-
-        ListView.Items(indiceListView).Selected = True
-
-    End Sub
-
-    ''' <summary>
-    ''' Maneja el evento Click del botón Último. Selecciona el último elemento en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Último.
     ''' </summary>
     Private Sub ButtonUltimo_Click(sender As Object, e As EventArgs) Handles ButtonUltimo.Click
 
-        ' Selecciona el último elemento en el ListView
-        ListView.Items(indiceListView).Selected = False
+        ' Deselecciona el elemento actual si existe y selecciona el último
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+            ListView.Items(indiceListView).Selected = False
+
+        End If
 
         indiceListView = ListView.Items.Count - 1
 
-        ListView.Items(indiceListView).Selected = True
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+            ListView.Items(indiceListView).Selected = True
+
+        End If
 
     End Sub
 
@@ -479,12 +519,21 @@ Public Class Profesores
     ''' </summary>
     Private Sub AgregarProfesor()
 
-        Dim Profesor As Profesor = New Profesor With {
+        Try
+
+            ' Crea un objeto de profesor y lo agrega a la base de datos
+            Dim Profesor As Profesor = New Profesor With {
             .Nombre = TextBoxNombre.Text,
             .Apellidos = TextBoxApellidos.Text,
             .Departamento = TextBoxDepartamento.Text}
 
-        BaseDeDatos.AgregarProfesor(Profesor)
+            BaseDeDatos.AgregarProfesor(Profesor)
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al agregar el profesor, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -493,16 +542,26 @@ Public Class Profesores
     ''' </summary>
     Private Sub EliminarProfesor()
 
-        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar este profesor?", "Confirmación", MessageBoxButtons.YesNo)
+        Try
 
-        If result = DialogResult.Yes Then
+            ' Pregunta al usuario si está seguro de eliminar el profesor
+            Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar este profesor?", "Confirmación", MessageBoxButtons.YesNo)
 
-            Dim Profesor As Profesor = New Profesor With {
-            .Id = TextBoxId.Text}
+            ' Si el usuario confirma, elimina el profesor de la base de datos
+            If result = DialogResult.Yes Then
 
-            BaseDeDatos.EliminarProfesor(Profesor)
+                Dim Profesor As Profesor = New Profesor With {
+                .Id = TextBoxId.Text}
 
-        End If
+                BaseDeDatos.EliminarProfesor(Profesor)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al eliminar el profesor, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -511,13 +570,22 @@ Public Class Profesores
     ''' </summary>
     Private Sub ModificarProfesor()
 
-        Dim Profesor As Profesor = New Profesor With {
+        Try
+
+            ' Crea un objeto de profesor con los detalles modificados y actualiza la base de datos
+            Dim Profesor As Profesor = New Profesor With {
             .Id = TextBoxId.Text,
             .Nombre = TextBoxNombre.Text,
             .Apellidos = TextBoxApellidos.Text,
             .Departamento = TextBoxDepartamento.Text}
 
-        BaseDeDatos.ModificarProfesor(Profesor)
+            BaseDeDatos.ModificarProfesor(Profesor)
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al modificar el profesor, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 

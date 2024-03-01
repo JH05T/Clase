@@ -88,6 +88,10 @@ Module BaseDeDatos
 
         If Conexion.State = ConnectionState.Open Then
 
+            ' Actualiza la base de datos con los cambios en el DataSet
+            ActualizarDB(DatosAsignaturas, AdaptadorDatosAsignaturas, "Asignaturas")
+            ActualizarDB(DatosProfesores, AdaptadorDatosProfesores, "Profesores")
+
             Conexion.Close()
 
         Else
@@ -96,6 +100,34 @@ Module BaseDeDatos
             MsgBox("No se puede cerrar")
 
         End If
+
+    End Sub
+
+    Public Sub ActualizarDB(Datos As DataSet, Adaptador As SQLiteDataAdapter, Tabla As String)
+
+        Try
+
+            If Datos.HasChanges() Then
+
+                Dim NuevosDatos = Datos.GetChanges()
+
+                If Datos.HasErrors() Then
+
+                    Datos.RejectChanges()
+
+                Else
+
+                    Adaptador.Update(NuevosDatos, Tabla)
+
+                    Datos.AcceptChanges()
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -121,10 +153,14 @@ Module BaseDeDatos
         ' Llena el conjunto de datos con los resultados de la consulta
         AdaptadorDatosAlumnos.Fill(DatosAlumnos, "Alumnos")
 
+        ' Establece la clave primaria del DataTable
+        DatosAlumnos.Tables("Alumnos").PrimaryKey = New DataColumn() {DatosAlumnos.Tables("Alumnos").Columns("Id")}
+
         ' Retorna el conjunto de datos que contiene la información de los alumnos
         Return DatosAlumnos
 
     End Function
+
 
     ''' <summary>
     ''' Lee los datos de un alumno específico desde la base de datos.
@@ -174,7 +210,8 @@ Module BaseDeDatos
     ''' Agrega un nuevo alumno a la base de datos.
     ''' </summary>
     ''' <param name="Alumno">El objeto Alumno que se va a agregar.</param>
-    Public Sub AgregarAlumno(Alumno As Alumno)
+    ' Crea un id temporal para los nuevos alumnos
+    Public Function AgregarAlumno(Alumno As Alumno) As DataSet
 
         ' Consulta SQL para insertar un nuevo registro en la tabla Alumnos
         Dim Insert As String = "Insert into Alumnos (Nombre, Apellidos, Direccion, Localidad, Movil, Email, FechaNacimiento, Nacionalidad) values (@Nombre, @Apellidos, @Direccion, @Localidad, @Movil, @Email, @FechaNacimiento, @Nacionalidad)"
@@ -192,19 +229,38 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@FechaNacimiento", Alumno.FechaNacimiento.ToString("yyyy-MM-dd"))
         Comando.Parameters.AddWithValue("@Nacionalidad", Alumno.Nacionalidad)
 
-        ' Ejecuta el comando para agregar el nuevo alumno a la base de datos
-        Comando.ExecuteNonQuery()
+        ' Agrega el nuevo alumno al DataSet
+        Dim fila = DatosAlumnos.Tables("Alumnos").NewRow()
+        fila("id") = 0
+        fila("Nombre") = Alumno.Nombre
+        fila("Apellidos") = Alumno.Apellidos
+        fila("Direccion") = Alumno.Direccion
+        fila("Localidad") = Alumno.Localidad
+        fila("Movil") = Alumno.Movil
+        fila("Email") = Alumno.Email
+        fila("FechaNacimiento") = Alumno.FechaNacimiento.ToString("yyyy-MM-dd")
+        fila("Nacionalidad") = Alumno.Nacionalidad
+        DatosAlumnos.Tables("Alumnos").Rows.Add(fila)
 
-    End Sub
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAlumnos, AdaptadorDatosAlumnos, "Alumnos")
+
+        DatosAlumnos.Clear()
+
+        AdaptadorDatosAlumnos.Fill(DatosAlumnos, "Alumnos")
+
+        Return DatosAlumnos
+
+    End Function
 
     ''' <summary>
-    ''' Modifica los datos de un alumno en la base de datos.
+    ''' Modifica los datos de un alumno en el DataSet.
     ''' </summary>
     ''' <param name="Alumno">El objeto Alumno con los datos modificados.</param>
-    Public Sub ModificarAlumno(Alumno As Alumno)
+    Public Function ModificarAlumno(Alumno As Alumno) As DataSet
 
-        ' Consulta SQL para actualizar los datos de un alumno específico en la tabla Alumnos
-        Dim Update As String = "update Alumnos set Nombre = @Nombre, Apellidos = @Apellidos, Direccion = @Direccion, Localidad = @Localidad, Movil = @Movil, Email = @Email, FechaNacimiento = @FechaNacimiento, Nacionalidad = @Nacionalidad where Id = @Id"
+        ' Consulta SQL para actualizar un registro existente en la tabla Alumnos
+        Dim Update As String = "Update Alumnos set Nombre = @Nombre, Apellidos = @Apellidos, Direccion = @Direccion, Localidad = @Localidad, Movil = @Movil, Email = @Email, FechaNacimiento = @FechaNacimiento, Nacionalidad = @Nacionalidad where Id = @Id"
 
         ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Update, Conexion)
@@ -220,18 +276,41 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Nacionalidad", Alumno.Nacionalidad)
         Comando.Parameters.AddWithValue("@Id", Alumno.Id)
 
-        ' Ejecuta el comando para modificar los datos del alumno en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila del alumno en el DataSet
+        Dim fila = DatosAlumnos.Tables("Alumnos").Rows.Find(Alumno.Id)
 
-    End Sub
+        ' Si la fila existe, modifica los datos del alumno
+        If fila IsNot Nothing Then
+
+            fila("Nombre") = Alumno.Nombre
+            fila("Apellidos") = Alumno.Apellidos
+            fila("Direccion") = Alumno.Direccion
+            fila("Localidad") = Alumno.Localidad
+            fila("Movil") = Alumno.Movil
+            fila("Email") = Alumno.Email
+            fila("FechaNacimiento") = Alumno.FechaNacimiento.ToString("yyyy-MM-dd")
+            fila("Nacionalidad") = Alumno.Nacionalidad
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAlumnos, AdaptadorDatosAlumnos, "Alumnos")
+
+        DatosAlumnos.Clear()
+
+        AdaptadorDatosAlumnos.Fill(DatosAlumnos, "Alumnos")
+
+        Return DatosAlumnos
+
+    End Function
 
     ''' <summary>
-    ''' Elimina un alumno de la base de datos.
+    ''' Elimina un alumno del DataSet.
     ''' </summary>
     ''' <param name="Alumno">El objeto Alumno que se va a eliminar.</param>
-    Public Sub EliminarAlumno(Alumno As Alumno)
+    Public Function EliminarAlumno(Alumno As Alumno) As DataSet
 
-        ' Consulta SQL para eliminar un registro de la tabla Alumnos basado en su Id
+        ' Consulta SQL para eliminar un registro de la tabla Alumnos
         Dim Delete As String = "delete from Alumnos where Id = @Id"
 
         ' Crea un comando SQLite con la consulta y los parámetros necesarios
@@ -241,10 +320,26 @@ Module BaseDeDatos
 
         Comando.Parameters.AddWithValue("@Id", Alumno.Id)
 
-        ' Ejecuta el comando para eliminar el alumno de la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila del alumno en el DataSet
+        Dim fila = DatosAlumnos.Tables("Alumnos").Rows.Find(Alumno.Id)
 
-    End Sub
+        ' Si la fila existe, elimina al alumno del DataSet
+        If fila IsNot Nothing Then
+
+            fila.Delete()
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAlumnos, AdaptadorDatosAlumnos, "Alumnos")
+
+        DatosAlumnos.Clear()
+
+        AdaptadorDatosAlumnos.Fill(DatosAlumnos, "Alumnos")
+
+        Return DatosAlumnos
+
+    End Function
 
     '                                       '
     '   GESTION DE LA TABLA DE ASIGNATURAS  '
@@ -267,6 +362,9 @@ Module BaseDeDatos
 
         ' Llenar el DataSet con los datos obtenidos del adaptador
         AdaptadorDatosAsignaturas.Fill(DatosAsignaturas, "Asignaturas")
+
+        ' Establece la clave primaria del DataTable
+        DatosAsignaturas.Tables("Asignaturas").PrimaryKey = New DataColumn() {DatosAsignaturas.Tables("Asignaturas").Columns("Id")}
 
         ' Devolver el DataSet lleno
         Return DatosAsignaturas
@@ -317,12 +415,12 @@ Module BaseDeDatos
     ''' Agrega una nueva asignatura a la base de datos.
     ''' </summary>
     ''' <param name="Asignatura">El objeto Asignatura que contiene los datos de la nueva asignatura a agregar.</param>
-    Public Sub AgregarAsignatura(Asignatura As Asignatura)
+    Public Function AgregarAsignatura(Asignatura As Asignatura) As DataSet
 
-        ' Consulta SQL para insertar un nuevo registro en la tabla de Asignaturas con los datos de la nueva asignatura
+        ' Consulta SQL para insertar un nuevo registro en la tabla Asignaturas
         Dim Insert As String = "Insert into Asignaturas (Nombre, Aula, Profesor) values (@Nombre, @Aula, @Profesor)"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Insert, Conexion)
 
         AdaptadorDatosAsignaturas.InsertCommand = Comando
@@ -332,21 +430,35 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Aula", Asignatura.Aula)
         Comando.Parameters.AddWithValue("@Profesor", Asignatura.Profesor)
 
-        ' Ejecutar el comando para insertar la nueva asignatura en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Agrega la nueva asignatura al DataSet
+        Dim fila = DatosAsignaturas.Tables("Asignaturas").NewRow()
+        fila("id") = 0
+        fila("Nombre") = Asignatura.Nombre
+        fila("Aula") = Asignatura.Aula
+        fila("Profesor") = Asignatura.Profesor
+        DatosAsignaturas.Tables("Asignaturas").Rows.Add(fila)
 
-    End Sub
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAsignaturas, AdaptadorDatosAsignaturas, "Asignaturas")
+
+        DatosAsignaturas.Clear()
+
+        AdaptadorDatosAlumnos.Fill(DatosAsignaturas, "Asignaturas")
+
+        Return DatosAsignaturas
+
+    End Function
 
     ''' <summary>
-    ''' Modifica los datos de una asignatura existente en la base de datos.
+    ''' Modifica los datos de una asignatura en el DataSet.
     ''' </summary>
-    ''' <param name="Asignatura">El objeto Asignatura con los datos actualizados de la asignatura.</param>
-    Public Sub ModificarAsignatura(Asignatura As Asignatura)
+    ''' <param name="Asignatura">El objeto Asignatura con los datos modificados.</param>
+    Public Function ModificarAsignatura(Asignatura As Asignatura) As DataSet
 
-        ' Consulta SQL para actualizar los datos de la asignatura en la tabla de Asignaturas
-        Dim Update As String = "update Asignaturas set Nombre = @Nombre, Aula = @Aula, Profesor = @Profesor where Id = @Id"
+        ' Consulta SQL para actualizar un registro existente en la tabla Asignaturas
+        Dim Update As String = "Update Asignaturas set Nombre = @Nombre, Aula = @Aula, Profesor = @Profesor where Id = @Id"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Update, Conexion)
 
         AdaptadorDatosAsignaturas.UpdateCommand = Comando
@@ -357,21 +469,39 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Profesor", Asignatura.Profesor)
         Comando.Parameters.AddWithValue("@Id", Asignatura.Id)
 
-        ' Ejecutar el comando para actualizar los datos de la asignatura en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila de la asignatura en el DataSet
+        Dim fila = DatosAsignaturas.Tables("Asignaturas").Rows.Find(Asignatura.Id)
 
-    End Sub
+        ' Si la fila existe, modifica los datos de la asignatura
+        If fila IsNot Nothing Then
+
+            fila("Nombre") = Asignatura.Nombre
+            fila("Aula") = Asignatura.Aula
+            fila("Profesor") = Asignatura.Profesor
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAsignaturas, AdaptadorDatosAsignaturas, "Asignaturas")
+
+        DatosAsignaturas.Clear()
+
+        AdaptadorDatosAsignaturas.Fill(DatosAsignaturas, "Asignaturas")
+
+        Return DatosAsignaturas
+
+    End Function
 
     ''' <summary>
-    ''' Elimina una asignatura existente de la base de datos.
+    ''' Elimina una asignatura del DataSet.
     ''' </summary>
-    ''' <param name="Asignatura">El objeto Asignatura que representa la asignatura a eliminar.</param>
-    Public Sub EliminarAsignatura(Asignatura As Asignatura)
+    ''' <param name="Asignatura">El objeto Asignatura que se va a eliminar.</param>
+    Public Function EliminarAsignatura(Asignatura As Asignatura) As DataSet
 
-        ' Consulta SQL para eliminar la asignatura de la tabla de Asignaturas
+        ' Consulta SQL para eliminar un registro de la tabla Asignaturas
         Dim Delete As String = "delete from Asignaturas where Id = @Id"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Delete, Conexion)
 
         AdaptadorDatosAsignaturas.DeleteCommand = Comando
@@ -379,10 +509,27 @@ Module BaseDeDatos
         ' Agregar el parámetro de ID al comando
         Comando.Parameters.AddWithValue("@Id", Asignatura.Id)
 
-        ' Ejecutar el comando para eliminar la asignatura de la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila de la asignatura en el DataSet
+        Dim fila = DatosAsignaturas.Tables("Asignaturas").Rows.Find(Asignatura.Id)
 
-    End Sub
+        ' Si la fila existe, elimina la asignatura del DataSet
+        If fila IsNot Nothing Then
+
+            fila.Delete()
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosAsignaturas, AdaptadorDatosAsignaturas, "Asignaturas")
+
+        DatosAsignaturas.Clear()
+
+        AdaptadorDatosAsignaturas.Fill(DatosAsignaturas, "Asignaturas")
+
+        Return DatosAsignaturas
+
+    End Function
+
 
     '                                       '
     '   GESTION DE LA TABLA DE PROFESORES   '
@@ -405,6 +552,9 @@ Module BaseDeDatos
 
         ' Llenar el DataSet con los datos obtenidos del adaptador
         AdaptadorDatosProfesores.Fill(DatosProfesores, "Profesores")
+
+        ' Establece la clave primaria del DataTable
+        DatosProfesores.Tables("Profesores").PrimaryKey = New DataColumn() {DatosProfesores.Tables("Profesores").Columns("Id")}
 
         ' Devolver el DataSet lleno
         Return DatosProfesores
@@ -455,12 +605,12 @@ Module BaseDeDatos
     ''' Agrega un nuevo profesor a la base de datos.
     ''' </summary>
     ''' <param name="Profesor">El objeto Profesor que contiene los datos del nuevo profesor a agregar.</param>
-    Public Sub AgregarProfesor(Profesor As Profesor)
+    Public Function AgregarProfesor(Profesor As Profesor) As DataSet
 
-        ' Consulta SQL para insertar un nuevo registro en la tabla de Profesores con los datos del nuevo profesor
+        ' Consulta SQL para insertar un nuevo registro en la tabla Profesores
         Dim Insert As String = "Insert into Profesores (Nombre, Apellidos, Departamento) values (@Nombre, @Apellidos, @Departamento)"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Insert, Conexion)
 
         AdaptadorDatosProfesores.InsertCommand = Comando
@@ -470,21 +620,35 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Apellidos", Profesor.Apellidos)
         Comando.Parameters.AddWithValue("@Departamento", Profesor.Departamento)
 
-        ' Ejecutar el comando para insertar el nuevo profesor en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Agrega el nuevo profesor al DataSet
+        Dim fila = DatosProfesores.Tables("Profesores").NewRow()
+        fila("id") = 0
+        fila("Nombre") = Profesor.Nombre
+        fila("Apellidos") = Profesor.Apellidos
+        fila("Departamento") = Profesor.Departamento
+        DatosProfesores.Tables("Profesores").Rows.Add(fila)
 
-    End Sub
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosProfesores, AdaptadorDatosProfesores, "Profesores")
+
+        DatosProfesores.Clear()
+
+        AdaptadorDatosAlumnos.Fill(DatosProfesores, "Profesores")
+
+        Return DatosProfesores
+
+    End Function
 
     ''' <summary>
-    ''' Modifica los datos de un profesor existente en la base de datos.
+    ''' Modifica los datos de un profesor en el DataSet.
     ''' </summary>
-    ''' <param name="Profesor">El objeto Profesor con los datos actualizados del profesor.</param>
-    Public Sub ModificarProfesor(Profesor As Profesor)
+    ''' <param name="Profesor">El objeto Profesor con los datos modificados.</param>
+    Public Function ModificarProfesor(Profesor As Profesor) As DataSet
 
-        ' Consulta SQL para actualizar los datos del profesor en la tabla de Profesores
-        Dim Update As String = "update Profesores set Nombre = @Nombre, Apellidos = @Apellidos, Departamento = @Departamento where Id = @Id"
+        ' Consulta SQL para actualizar un registro existente en la tabla Profesores
+        Dim Update As String = "Update Profesores set Nombre = @Nombre, Apellidos = @Apellidos, Departamento = @Departamento where Id = @Id"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Update, Conexion)
 
         AdaptadorDatosProfesores.UpdateCommand = Comando
@@ -495,21 +659,39 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Departamento", Profesor.Departamento)
         Comando.Parameters.AddWithValue("@Id", Profesor.Id)
 
-        ' Ejecutar el comando para actualizar los datos del profesor en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila del profesor en el DataSet
+        Dim fila = DatosProfesores.Tables("Profesores").Rows.Find(Profesor.Id)
 
-    End Sub
+        ' Si la fila existe, modifica los datos del profesor
+        If fila IsNot Nothing Then
+
+            fila("Nombre") = Profesor.Nombre
+            fila("Apellidos") = Profesor.Apellidos
+            fila("Departamento") = Profesor.Departamento
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosProfesores, AdaptadorDatosProfesores, "Profesores")
+
+        DatosProfesores.Clear()
+
+        AdaptadorDatosProfesores.Fill(DatosProfesores, "Profesores")
+
+        Return DatosProfesores
+
+    End Function
 
     ''' <summary>
-    ''' Elimina un profesor existente de la base de datos.
+    ''' Elimina un profesor del DataSet.
     ''' </summary>
-    ''' <param name="Profesor">El objeto Profesor que representa al profesor a eliminar.</param>
-    Public Sub EliminarProfesor(Profesor As Profesor)
+    ''' <param name="Profesor">El objeto Profesor que se va a eliminar.</param>
+    Public Function EliminarProfesor(Profesor As Profesor) As DataSet
 
-        ' Consulta SQL para eliminar al profesor de la tabla de Profesores
+        ' Consulta SQL para eliminar un registro de la tabla Profesores
         Dim Delete As String = "delete from Profesores where Id = @Id"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Delete, Conexion)
 
         AdaptadorDatosProfesores.DeleteCommand = Comando
@@ -517,10 +699,26 @@ Module BaseDeDatos
         ' Agregar el parámetro de ID al comando
         Comando.Parameters.AddWithValue("@Id", Profesor.Id)
 
-        ' Ejecutar el comando para eliminar al profesor de la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila del profesor en el DataSet
+        Dim fila = DatosProfesores.Tables("Profesores").Rows.Find(Profesor.Id)
 
-    End Sub
+        ' Si la fila existe, elimina al profesor del DataSet
+        If fila IsNot Nothing Then
+
+            fila.Delete()
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosProfesores, AdaptadorDatosProfesores, "Profesores")
+
+        DatosProfesores.Clear()
+
+        AdaptadorDatosProfesores.Fill(DatosProfesores, "Profesores")
+
+        Return DatosProfesores
+
+    End Function
 
     '                                       '
     '   GESTION DE LA TABLA DE NOTAS        '
@@ -543,6 +741,9 @@ Module BaseDeDatos
 
         ' Llenar el DataSet con los datos obtenidos del adaptador
         AdaptadorDatosNotas.Fill(DatosNotas, "Cursa")
+
+        ' Establece la clave primaria del DataTable
+        DatosNotas.Tables("Cursa").PrimaryKey = New DataColumn() {DatosNotas.Tables("Cursa").Columns("Asignatura"), DatosNotas.Tables("Cursa").Columns("Alumno")}
 
         ' Devolver el DataSet lleno
         Return DatosNotas
@@ -620,6 +821,9 @@ Module BaseDeDatos
         ' Llenar el DataSet con los datos obtenidos del adaptador
         Adaptador.Fill(DatosNotasAlumno, "NotasAlumno")
 
+        ' Establece la clave primaria del DataTable
+        DatosNotas.Tables("Cursa").PrimaryKey = New DataColumn() {DatosNotas.Tables("Cursa").Columns("Asignatura"), DatosNotas.Tables("Cursa").Columns("Alumno")}
+
         ' Devolver el DataSet lleno
         Return DatosNotasAlumno
 
@@ -653,6 +857,9 @@ Module BaseDeDatos
         ' Llenar el DataSet con los datos obtenidos del adaptador
         Adaptador.Fill(DatosNotasAsignatura, "NotasAsignatura")
 
+        ' Establece la clave primaria del DataTable
+        DatosNotas.Tables("Cursa").PrimaryKey = New DataColumn() {DatosNotas.Tables("Cursa").Columns("Asignatura"), DatosNotas.Tables("Cursa").Columns("Alumno")}
+
         ' Devolver el DataSet lleno
         Return DatosNotasAsignatura
 
@@ -663,13 +870,14 @@ Module BaseDeDatos
     ''' Agrega una nueva nota a la base de datos.
     ''' </summary>
     ''' <param name="Nota">El objeto Notas que contiene los datos de la nueva nota a agregar.</param>
-    Public Sub AgregarNota(Nota As Nota)
+    Public Function AgregarNota(Nota As Nota) As DataSet
 
-        ' Consulta SQL para insertar un nuevo registro en la tabla de Notas con los datos de la nueva nota
+        ' Consulta SQL para insertar un nuevo registro en la tabla Notas
         Dim Insert As String = "Insert into Cursa (Alumno, Asignatura, Nota1, Nota2, Nota3, NotaFinal) values (@Alumno, @Asignatura, @Nota1, @Nota2, @Nota3, @NotaFinal)"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Insert, Conexion)
+        AdaptadorDatosNotas.InsertCommand = Comando
 
         ' Agregar los parámetros necesarios al comando
         Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
@@ -679,22 +887,39 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Nota3", Nota.Nota3)
         Comando.Parameters.AddWithValue("@NotaFinal", Nota.NotaFinal)
 
-        ' Ejecutar el comando para insertar la nueva nota en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Agrega la nueva nota al DataSet
+        Dim fila = DatosNotas.Tables("Cursa").NewRow()
+        fila("Alumno") = Nota.Alumno
+        fila("Asignatura") = Nota.Asignatura
+        fila("Nota1") = Nota.Nota1
+        fila("Nota2") = Nota.Nota2
+        fila("Nota3") = Nota.Nota3
+        fila("NotaFinal") = Nota.NotaFinal
+        DatosNotas.Tables("Cursa").Rows.Add(fila)
 
-    End Sub
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosNotas, AdaptadorDatosNotas, "Cursa")
+
+        DatosNotas.Clear()
+
+        AdaptadorDatosNotas.Fill(DatosNotas, "Cursa")
+
+        Return DatosNotas
+
+    End Function
 
     ''' <summary>
-    ''' Modifica los datos de una nota existente en la base de datos.
+    ''' Modifica los datos de una nota en el DataSet.
     ''' </summary>
-    ''' <param name="Nota">El objeto Notas con los datos actualizados de la nota.</param>
-    Public Sub ModificarNota(Nota As Nota)
+    ''' <param name="Nota">El objeto Nota con los datos modificados.</param>
+    Public Function ModificarNota(Nota As Nota) As DataSet
 
-        ' Consulta SQL para actualizar los datos de la nota en la tabla de Notas
-        Dim Update As String = "update Cursa set Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3, NotaFinal = @NotaFinal where Alumno = @Alumno and Asignatura = @Asignatura"
+        ' Consulta SQL para actualizar un registro existente en la tabla Cursa
+        Dim Update As String = "Update Cursa set Nota1 = @Nota1, Nota2 = @Nota2, Nota3 = @Nota3, NotaFinal = @NotaFinal where Alumno = @Alumno and Asignatura = @Asignatura"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Update, Conexion)
+        AdaptadorDatosNotas.UpdateCommand = Comando
 
         ' Agregar los parámetros necesarios al comando
         Comando.Parameters.AddWithValue("@Nota1", Nota.Nota1)
@@ -704,30 +929,66 @@ Module BaseDeDatos
         Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
         Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
 
-        ' Ejecutar el comando para actualizar los datos de la nota en la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila de la nota en el DataSet
+        Dim fila = DatosNotas.Tables("Cursa").Rows.Find(New Object() {Nota.Alumno, Nota.Asignatura})
 
-    End Sub
+        ' Si la fila existe, modifica los datos de la nota
+        If fila IsNot Nothing Then
+
+            fila("Nota1") = Nota.Nota1
+            fila("Nota2") = Nota.Nota2
+            fila("Nota3") = Nota.Nota3
+            fila("NotaFinal") = Nota.NotaFinal
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosNotas, AdaptadorDatosNotas, "Cursa")
+
+        DatosNotas.Clear()
+
+        AdaptadorDatosNotas.Fill(DatosNotas, "Cursa")
+
+        Return DatosNotas
+
+    End Function
 
     ''' <summary>
-    ''' Elimina una nota existente de la base de datos.
+    ''' Elimina una nota del DataSet.
     ''' </summary>
-    ''' <param name="Nota">El objeto Notas que representa la nota a eliminar.</param>
-    Public Sub EliminarNota(Nota As Nota)
+    ''' <param name="Nota">El objeto Nota que se va a eliminar.</param>
+    Public Function EliminarNota(Nota As Nota) As DataSet
 
-        ' Consulta SQL para eliminar la nota de la tabla de Notas
+        ' Consulta SQL para eliminar un registro de la tabla Cursa
         Dim Delete As String = "delete from Cursa where Alumno = @Alumno and Asignatura = @Asignatura"
 
-        ' Crear un nuevo comando SQLite con la consulta y la conexión existente
+        ' Crea un comando SQLite con la consulta y los parámetros necesarios
         Dim Comando = New SQLiteCommand(Delete, Conexion)
 
-        ' Agregar los parámetros necesarios al comando
+        AdaptadorDatosNotas.DeleteCommand = Comando
+
         Comando.Parameters.AddWithValue("@Alumno", Nota.Alumno)
         Comando.Parameters.AddWithValue("@Asignatura", Nota.Asignatura)
 
-        ' Ejecutar el comando para eliminar la nota de la base de datos
-        Comando.ExecuteNonQuery()
+        ' Busca la fila de la nota en el DataSet
+        Dim fila = DatosNotas.Tables("Cursa").Rows.Find(New Object() {Nota.Alumno, Nota.Asignatura})
 
-    End Sub
+        ' Si la fila existe, elimina la nota del DataSet
+        If fila IsNot Nothing Then
+
+            fila.Delete()
+
+        End If
+
+        ' Actualiza la base de datos con los cambios en el DataSet
+        ActualizarDB(DatosNotas, AdaptadorDatosNotas, "Cursa")
+
+        DatosNotas.Clear()
+
+        AdaptadorDatosNotas.Fill(DatosNotas, "Cursa")
+
+        Return DatosNotas
+
+    End Function
 
 End Module

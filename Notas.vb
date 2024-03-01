@@ -65,34 +65,79 @@ Public Class Notas
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Siguiente. Selecciona el siguiente elemento en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Siguiente.
     ''' </summary>
     Private Sub ButtonSiguiente_Click(sender As Object, e As EventArgs) Handles ButtonSiguiente.Click
 
+        ' Verifica si hay más elementos en el ListView
         If indiceListView < ListView.Items.Count - 1 Then
 
-            ' Selecciona el siguiente elemento en el ListView
-            ListView.Items(indiceListView).Selected = False
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
 
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Incrementa el índice y selecciona el siguiente elemento
             indiceListView += 1
 
-            ListView.Items(indiceListView).Selected = True
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView < ListView.Items.Count AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
 
         End If
 
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Anterior. Selecciona el elemento anterior en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Anterior.
     ''' </summary>
     Private Sub ButtonAnterior_Click(sender As Object, e As EventArgs) Handles ButtonAnterior.Click
 
+        ' Verifica si hay elementos anteriores en el ListView
         If indiceListView > 0 Then
 
-            ' Selecciona el elemento anterior en el ListView
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Decrementa el índice y selecciona el elemento anterior
+            indiceListView -= 1
+
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView >= 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Evento que se dispara cuando se hace clic en el botón Primero.
+    ''' </summary>
+    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
+
+        ' Deselecciona el elemento actual si existe y selecciona el primero
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
             ListView.Items(indiceListView).Selected = False
 
-            indiceListView -= 1
+        End If
+
+        indiceListView = 0
+
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
 
             ListView.Items(indiceListView).Selected = True
 
@@ -101,30 +146,25 @@ Public Class Notas
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Primero. Selecciona el primer elemento en el ListView.
-    ''' </summary>
-    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
-
-        ' Selecciona el primer elemento en el ListView
-        ListView.Items(indiceListView).Selected = False
-
-        indiceListView = 0
-
-        ListView.Items(indiceListView).Selected = True
-
-    End Sub
-
-    ''' <summary>
-    ''' Maneja el evento Click del botón Último. Selecciona el último elemento en el ListView.
+    ''' Evento que se dispara cuando se hace clic en el botón Último.
     ''' </summary>
     Private Sub ButtonUltimo_Click(sender As Object, e As EventArgs) Handles ButtonUltimo.Click
 
-        ' Selecciona el último elemento en el ListView
-        ListView.Items(indiceListView).Selected = False
+        ' Deselecciona el elemento actual si existe y selecciona el último
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+            ListView.Items(indiceListView).Selected = False
+
+        End If
 
         indiceListView = ListView.Items.Count - 1
 
-        ListView.Items(indiceListView).Selected = True
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+            ListView.Items(indiceListView).Selected = True
+
+        End If
 
     End Sub
 
@@ -509,36 +549,44 @@ Public Class Notas
     ''' </summary>
     Private Sub AgregarNota()
 
-        Dim Nota As Nota = New Nota
-        Dim Alumno, Asignatura As Integer
-        Dim Nota1, Nota2, Nota3 As Single
+        Try
 
-        ' Reemplaza las comas por puntos en las cadenas de texto
-        Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
-        Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
-        Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
+            Dim Nota As Nota = New Nota
+            Dim Alumno, Asignatura As Integer
+            Dim Nota1, Nota2, Nota3 As Single
 
-        ' Convierte los valores de texto a números
-        If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
+            ' Reemplaza las comas por puntos en las cadenas de texto
+            Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
+            Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
+            Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
 
-            ' Asigna los valores a la estructura Nota
-            Nota.Alumno = Alumno
-            Nota.Asignatura = Asignatura
-            Nota.Nota1 = Nota1
-            Nota.Nota2 = Nota2
-            Nota.Nota3 = Nota3
+            ' Convierte los valores de texto a números
+            If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
 
-            ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
-            Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
+                ' Asigna los valores a la estructura Nota
+                Nota.Alumno = Alumno
+                Nota.Asignatura = Asignatura
+                Nota.Nota1 = Nota1
+                Nota.Nota2 = Nota2
+                Nota.Nota3 = Nota3
 
-            ' Agrega la nota a la base de datos
-            BaseDeDatos.AgregarNota(Nota)
+                ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
+                Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
 
-        Else
+                ' Agrega la nota a la base de datos
+                BaseDeDatos.AgregarNota(Nota)
 
-            MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+            Else
 
-        End If
+                MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al agregar la nota, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -548,17 +596,25 @@ Public Class Notas
     ''' </summary>
     Private Sub EliminarNota()
 
-        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar esta nota?", "Confirmación", MessageBoxButtons.YesNo)
+        Try
 
-        If result = DialogResult.Yes Then
+            Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar esta nota?", "Confirmación", MessageBoxButtons.YesNo)
 
-            Dim Nota As Nota = New Nota With {
-            .Alumno = TextBoxAlumno.Text,
-            .Asignatura = TextBoxAsignatura.Text}
+            If result = DialogResult.Yes Then
 
-            BaseDeDatos.EliminarNota(Nota)
+                Dim Nota As Nota = New Nota With {
+                .Alumno = TextBoxAlumno.Text,
+                .Asignatura = TextBoxAsignatura.Text}
 
-        End If
+                BaseDeDatos.EliminarNota(Nota)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al eliminar la nota, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -567,36 +623,44 @@ Public Class Notas
     ''' </summary>
     Private Sub ModificarNota()
 
-        Dim Nota As Nota = New Nota
-        Dim Alumno, Asignatura As Integer
-        Dim Nota1, Nota2, Nota3 As Single
+        Try
 
-        ' Reemplaza las comas por puntos en las cadenas de texto
-        Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
-        Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
-        Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
+            Dim Nota As Nota = New Nota
+            Dim Alumno, Asignatura As Integer
+            Dim Nota1, Nota2, Nota3 As Single
 
-        ' Convierte los valores de texto a números
-        If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
+            ' Reemplaza las comas por puntos en las cadenas de texto
+            Dim Nota1Text As String = TextBoxNota1.Text.Replace(".", ",")
+            Dim Nota2Text As String = TextBoxNota2.Text.Replace(".", ",")
+            Dim Nota3Text As String = TextBoxNota3.Text.Replace(".", ",")
 
-            ' Asigna los valores a la estructura Nota
-            Nota.Alumno = Alumno
-            Nota.Asignatura = Asignatura
-            Nota.Nota1 = Nota1
-            Nota.Nota2 = Nota2
-            Nota.Nota3 = Nota3
+            ' Convierte los valores de texto a números
+            If Integer.TryParse(TextBoxAlumno.Text, Alumno) AndAlso Integer.TryParse(TextBoxAsignatura.Text, Asignatura) AndAlso Single.TryParse(Nota1Text, Nota1) AndAlso Single.TryParse(Nota2Text, Nota2) AndAlso Single.TryParse(Nota3Text, Nota3) Then
 
-            ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
-            Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
+                ' Asigna los valores a la estructura Nota
+                Nota.Alumno = Alumno
+                Nota.Asignatura = Asignatura
+                Nota.Nota1 = Nota1
+                Nota.Nota2 = Nota2
+                Nota.Nota3 = Nota3
 
-            ' Agrega la nota a la base de datos
-            BaseDeDatos.ModificarNota(Nota)
+                ' Calcula la nota final como el promedio de Nota1, Nota2 y Nota3
+                Nota.NotaFinal = (Nota.Nota1 + Nota.Nota2 + Nota.Nota3) / 3
 
-        Else
+                ' Agrega la nota a la base de datos
+                BaseDeDatos.ModificarNota(Nota)
 
-            MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+            Else
 
-        End If
+                MsgBox("Por favor, es necesario introducir una ID válida para el alumno y la asignatura.", , "")
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al modificar la nota, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 

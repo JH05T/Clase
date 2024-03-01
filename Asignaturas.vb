@@ -63,36 +63,79 @@ Public Class Asignaturas
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Siguiente.
+    ''' Evento que se dispara cuando se hace clic en el botón Siguiente.
     ''' </summary>
     Private Sub ButtonSiguiente_Click(sender As Object, e As EventArgs) Handles ButtonSiguiente.Click
 
-        ' Verifica si hay un índice siguiente en el ListView
+        ' Verifica si hay más elementos en el ListView
         If indiceListView < ListView.Items.Count - 1 Then
 
-            ' Desselecciona el ítem actual, incrementa el índice y selecciona el siguiente ítem
-            ListView.Items(indiceListView).Selected = False
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
 
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Incrementa el índice y selecciona el siguiente elemento
             indiceListView += 1
 
-            ListView.Items(indiceListView).Selected = True
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView < ListView.Items.Count AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
 
         End If
 
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Anterior.
+    ''' Evento que se dispara cuando se hace clic en el botón Anterior.
     ''' </summary>
     Private Sub ButtonAnterior_Click(sender As Object, e As EventArgs) Handles ButtonAnterior.Click
 
-        ' Verifica si hay un índice anterior en el ListView
+        ' Verifica si hay elementos anteriores en el ListView
         If indiceListView > 0 Then
 
-            ' Desselecciona el ítem actual, decrementa el índice y selecciona el ítem anterior
+            ' Deselecciona el elemento actual si existe
+            If ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = False
+
+            End If
+
+            ' Decrementa el índice y selecciona el elemento anterior
+            indiceListView -= 1
+
+            ' Comprueba si el índice es válido antes de seleccionar el elemento
+            If indiceListView >= 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+                ListView.Items(indiceListView).Selected = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    ''' <summary>
+    ''' Evento que se dispara cuando se hace clic en el botón Primero.
+    ''' </summary>
+    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
+
+        ' Deselecciona el elemento actual si existe y selecciona el primero
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
             ListView.Items(indiceListView).Selected = False
 
-            indiceListView -= 1
+        End If
+
+        indiceListView = 0
+
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
 
             ListView.Items(indiceListView).Selected = True
 
@@ -101,31 +144,25 @@ Public Class Asignaturas
     End Sub
 
     ''' <summary>
-    ''' Maneja el evento Click del botón Primero.
-    ''' </summary>
-    Private Sub ButtonPrimero_Click(sender As Object, e As EventArgs) Handles ButtonPrimero.Click
-
-        ' Selecciona el primer ítem en el ListView
-        ListView.Items(indiceListView).Selected = False
-
-        indiceListView = 0
-
-        ListView.Items(indiceListView).Selected = True
-
-    End Sub
-
-    ''' <summary>
-    ''' Maneja el evento Click del botón Último.
+    ''' Evento que se dispara cuando se hace clic en el botón Último.
     ''' </summary>
     Private Sub ButtonUltimo_Click(sender As Object, e As EventArgs) Handles ButtonUltimo.Click
 
-        ' Selecciona el último ítem en el ListView
+        ' Deselecciona el elemento actual si existe y selecciona el último
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
 
-        ListView.Items(indiceListView).Selected = False
+            ListView.Items(indiceListView).Selected = False
+
+        End If
 
         indiceListView = ListView.Items.Count - 1
 
-        ListView.Items(indiceListView).Selected = True
+        ' Comprueba si el índice es válido antes de seleccionar el elemento
+        If ListView.Items.Count > 0 AndAlso ListView.Items(indiceListView) IsNot Nothing Then
+
+            ListView.Items(indiceListView).Selected = True
+
+        End If
 
     End Sub
 
@@ -489,14 +526,18 @@ Public Class Asignaturas
     ''' </summary>
     Private Sub AgregarAsignatura()
 
-        Dim Profesor As Integer
+        Try
 
-        ' Verifica si el ID del profesor es un número válido
-        If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
+            Dim Profesor As Integer
 
-            MessageBox.Show("Por favor, introduce una ID de profesor válida en el campo Profesor.")
+            ' Verifica si el ID del profesor es un número válido
+            If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
 
-        Else
+                MessageBox.Show("Por favor, introduce una ID de profesor válida en el campo Profesor.")
+
+                Return
+
+            End If
 
             ' Crea un objeto de asignatura y lo agrega a la base de datos
             Dim Asignatura As Asignatura = New Asignatura With {
@@ -506,7 +547,11 @@ Public Class Asignaturas
 
             BaseDeDatos.AgregarAsignatura(Asignatura)
 
-        End If
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al agregar la asignatura, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -515,18 +560,26 @@ Public Class Asignaturas
     ''' </summary>
     Private Sub EliminarAsignatura()
 
-        ' Pregunta al usuario si está seguro de eliminar la asignatura
-        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar esta asignatura?", "Confirmación", MessageBoxButtons.YesNo)
+        Try
 
-        ' Si el usuario confirma, elimina la asignatura de la base de datos
-        If result = DialogResult.Yes Then
+            ' Pregunta al usuario si está seguro de eliminar la asignatura
+            Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que quieres eliminar esta asignatura?", "Confirmación", MessageBoxButtons.YesNo)
 
-            Dim Asignatura As Asignatura = New Asignatura With {
-                .Id = TextBoxId.Text}
+            ' Si el usuario confirma, elimina la asignatura de la base de datos
+            If result = DialogResult.Yes Then
 
-            BaseDeDatos.EliminarAsignatura(Asignatura)
+                Dim Asignatura As Asignatura = New Asignatura With {
+                    .Id = TextBoxId.Text}
 
-        End If
+                BaseDeDatos.EliminarAsignatura(Asignatura)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al eliminar la asignatura, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
@@ -535,14 +588,18 @@ Public Class Asignaturas
     ''' </summary>
     Private Sub ModificarAsignatura()
 
-        Dim Profesor As Integer
+        Try
 
-        ' Verifica si el ID del profesor es un número válido
-        If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
+            Dim Profesor As Integer
 
-            MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
+            ' Verifica si el ID del profesor es un número válido
+            If Not Integer.TryParse(TextBoxProfesor.Text, Profesor) Then
 
-        Else
+                MessageBox.Show("Por favor, introduce un número válido en el campo Profesor.")
+
+                Return
+
+            End If
 
             ' Crea un objeto de asignatura con los detalles modificados y actualiza la base de datos
             Dim Asignatura As Asignatura = New Asignatura With {
@@ -553,7 +610,11 @@ Public Class Asignaturas
 
             BaseDeDatos.ModificarAsignatura(Asignatura)
 
-        End If
+        Catch ex As Exception
+
+            MessageBox.Show("Ha ocurrido un error al modificar la asignatura, comprueba que todos los campos hayan sido rellenados correctamente")
+
+        End Try
 
     End Sub
 
