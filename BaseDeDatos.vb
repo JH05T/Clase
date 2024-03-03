@@ -103,20 +103,30 @@ Module BaseDeDatos
 
     End Sub
 
+    ''' <summary>
+    ''' Actualiza la base de datos con los cambios realizados en un DataSet.
+    ''' </summary>
+    ''' <param name="Datos">El DataSet que contiene los datos.</param>
+    ''' <param name="Adaptador">El SQLiteDataAdapter que se utiliza para actualizar la base de datos.</param>
+    ''' <param name="Tabla">El nombre de la tabla en la base de datos que se va a actualizar.</param>
     Public Sub ActualizarDB(Datos As DataSet, Adaptador As SQLiteDataAdapter, Tabla As String)
 
         Try
 
+            ' Comprueba si hay cambios en el DataSet
             If Datos.HasChanges() Then
 
+                ' Obtiene los cambios realizados en el DataSet
                 Dim NuevosDatos = Datos.GetChanges()
 
+                ' Si hay errores en el DataSet, rechaza los cambios
                 If Datos.HasErrors() Then
 
                     Datos.RejectChanges()
 
                 Else
 
+                    ' Si no hay errores, actualiza la base de datos con los nuevos datos y acepta los cambios en el DataSet
                     Adaptador.Update(NuevosDatos, Tabla)
 
                     Datos.AcceptChanges()
@@ -126,6 +136,8 @@ Module BaseDeDatos
             End If
 
         Catch ex As Exception
+
+            ' Captura cualquier excepción que pueda ocurrir durante la ejecución del código
 
         End Try
 
